@@ -1,15 +1,120 @@
+* {
+    
+    /*box-sizing: border-box;*/
+    box-sizing: content-box;
+}
+
+body{
+	/*
+	background-image: ;
+	background-repeat: ;
+	background-size: contain / 100% 100% / cover;
+	*/
+	height: 100%;
+    background: purple; /* For browsers that do not support gradients */
+    background: linear-gradient(-35deg, DarkSlateGrey, brown); /* Standard syntax (must be last) */
+	background-attachment : fixed;
+	font-size: 100%;
+
+}
+body header{
+	position: sticky;
+	top:1%;
+}
+body header nav{
+	margin-top:3%;
+	display:grid;
+	justify-content: space-evenly;
+	grid-template-rows: 1fr;
+	grid-template-columns: repeat(4,1fr);
+	margin-bottom:20px;
+}
+body header nav a {
+	grid-row:1;	
+	background-color:purple;
+	text-decoration: none;
+	color: yellow;
+}
+body header nav a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+body header nav a:hover:not(.active) {
+    background-color: #FAFAFA;
+    color: green;
+}
+#a_profile{
+	grid-column-start:1;
+	grid-column-end:2;
+}
+#a_sugestii{
+	grid-column-start:2;
+	grid-column-end:3;
+}
+#a_catalog{
+	grid-column-start:3;
+	grid-column-end:4;
+}
+#a_logout{
+	grid-column-start:4;
+	grid-column-end:5;
+}
 #page_container{
-	
+	display: grid;
+	grid-template-columns: repeat(3,1fr);
+	grid-template-rows: repeat(3,1fr);
+	grid-gap:20px;
+		
+	}
+#page_container > div{
+	background-color: rgba(255, 255, 255, 0.8);
 }
 #rata_promo{
-	
+	position:sticky;
+	top:0px;
+	grid-column-start:1;
+	grid-column-end:3;
+	grid-row-start:1;
+	grid-row-end:4;
+
 }
 #git_grafic{
-	
+	height:30%;
+	grid-column:3;
+	grid-row:1;
+}
+#p_grafic{
+	height:auto;
 }
 #calendar{
-	
+	/*height:30%;*/
+	grid-column:3;
+	grid-row:2;
 }
-#procent_evenimente/total{
-	
+#events{
+	grid-column:3;
+	grid-row:3;
 }
+#
+#footer_id{
+	color:yellow;
+	text-align:center;
+}
+
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {...} 
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {...} 
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {...} 
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {...} 
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {...}
