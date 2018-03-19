@@ -1,0 +1,69 @@
+a:link {
+    color: yellow; 
+    background-color: transparent; 
+    text-decoration: none;
+}
+
+a:visited {
+    color: pink;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:hover {
+    color: red;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+a:active {
+    color: yellow;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+body {
+    height: 700px;
+    background: purple; /* For browsers that do not support gradients */
+    background: linear-gradient(-35deg, DarkSlateGrey, brown); /* Standard syntax (must be last) */
+    
+}
+nav{
+    margin: 1% 10% 10% 70%;
+}
+
+.wrapper {
+    display: grid;
+    grid-gap: 10px;
+        grid-template-columns: 100px 100px 100px;
+        background: purple; /* For browsers that do not support gradients */
+    background: linear-gradient(-35deg, DarkSlateGrey, brown);
+        color: #444;
+    }
+
+    .box {
+        background-color: #444;
+        color: #fff;
+        border-radius: 5px;
+        padding: 60px;
+        font-size: 90%;
+        color: yellow;
+
+    }
+
+    .a {
+        grid-column: 1;
+        grid-row: 1;
+    }
+    .b {
+        grid-column: 2 ;
+        grid-row: 2;
+    }
+    .c {
+        grid-column: 3 ;
+        grid-row: 1 ;
+    }
+    .d {
+        grid-column: 4;
+        grid-row: 2;
+    }
