@@ -11,22 +11,80 @@
 <body>
 	<header>
 		<nav>
-			<a id="a_profile" href="myprofile.html">Profilul meu</a>
+			<a id="a_profile" href="frontpage.html">Home</a>
 			<a id="a_sugestii" href="sugestii.html">Sugestii</a>
 			<a id="a_catalog" href="catalog.html" target="_blank">Catalog</a>
-			<a id="a_logout" href="logout.php">Logout</a>
+			<a id="a_logout" href="myprofile.php">Profilul meu</a>
 		</nav>
 	</header>
 	
 	<div id="page_container">
 		<div id="rata_promo">
-			<p  id="di"> rata</p>
+			<img id="img_rata" src="procent_img.jpg" alt="promo rate">	
 		</div>
+		<ul id="lista_sugestii">
+				<li id="sugestie_laborator"><a href="#">Ar fi bine sa mergi la urmatorul laborator (22.03)</a></li>
+				<li id="sugestie_curs"><a href="#">Nu uita de curs. (21.03)</a></li>
+				<li id="sugestie_eveniment"><a href="#">Eveniment important (28.03)</a></li>
+			</ul>
 		<div id="git_grafic">
-			<p  id="p_grafic"> grafic </p>
+			<img id="img_graph" src="graph.jpg" alt="grafic">
 		</div>
-		<div id="calendar">
-			<p  id="di"> calendar </p>
+		<div id="calendar_wrapper">
+			<div class="calendar_header">
+				<p>mon</p>
+				<p>tue</p>
+				<p>wed</p>
+				<p>thu</p>
+				<p>fri</p>
+				<p>sat</p>
+				<p>sun</p>
+			</div>
+			<div id="week1" class="calendar_week">
+				<div class="day">25</div>
+				<div class="day">26</div>
+				<div class="day">27</div>
+				<div class="day">28</div>
+				<div class="day">1</div>
+				<div class="day">2</div>
+				<div class="day">3</div>
+			</div>
+			<div id="week2" class="calendar_week">
+				<div class="day">4</div>
+				<div class="day">5</div>
+				<div class="day">6</div>
+				<div class="day">7</div>
+				<div class="day">8</div>
+				<div class="day">9</div>
+				<div class="day">10</div>        
+			</div>
+			<div id="week3" class="calendar_week">
+				<div class="day">11</div>
+				<div class="day">12</div>
+				<div class="day">13</div>
+				<div class="day">14</div>
+				<div class="day">15</div>
+				<div class="day">16</div>
+				<div class="day">17</div>    
+			</div>
+			<div id="week4" class="calendar_week">
+				<div class="day">18</div>
+				<div class="day">19</div>
+				<div class="day">20</div>
+				<div class="day">21</div>
+				<div class="day">22</div> 
+				<div class="day">23</div> 
+				<div class="day">24</div> 
+			</div>
+			<div id="week5" class="calendar_week">
+				<div class="day">25</div>
+				<div class="day">26</div>
+				<div class="day">27</div>
+				<div class="day">28</div>
+				<div class="day">29</div>
+				<div class="day">30</div>
+				<div class="day">31</div>
+			</div>	
 		</div>
 		<div id="events">			
 			<p  id="di"> evenimente</p>
