@@ -1,9 +1,0 @@
-body {
-    height: 700px;
-    background: purple; /* For browsers that do not support gradients */
-    background: linear-gradient(-35deg, DarkSlateGrey, brown); /* Standard syntax (must be last) */
-}
-
-#register_block{
-    margin: 20% 40% 40% 50%;
-}
