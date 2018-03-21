@@ -96,8 +96,8 @@ ul{
 	grid-column:1;
 }
 #home_li a{
-	border-top-left-radius: 17px;
-	border-bottom-left-radius: 17px;
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
 }
 #sugestii_li{
 	grid-row:1;
@@ -108,8 +108,8 @@ ul{
 	grid-column:3;
 }
 #ddn a{
-	border-top-right-radius: 17px;
-	border-bottom-right-radius: 17px;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
 }
 
 main {
