@@ -33,10 +33,9 @@
 		    	<p>Ce ar fi bine sa stii despre curs</p>
 		    	<a id="a_su_curs" href="#" onclick="showDiv_curs();return false;" class="info-link">Apasa pentru a vedea sugestiile</a>
 		    	<ul id="ul_su_curs">
-		    		<p>Urmatorul curs este pe 28.03</p>
-		    		<p>Ar fi bine sa vizitezi <a href="https://profs.info.uaic.ro/~busaco/teach/courses/web/web-film.html#week6">Pagina cursului - Saptamana 6</a></p>
+		    		<li><p>Urmatorul curs este pe 28.03</p></li>
+		    		<li><p>Ar fi bine sa vizitezi <a href="https://profs.info.uaic.ro/~busaco/teach/courses/web/web-film.html#week6">Pagina cursului - Saptamana 6</a></p></li>
 		    	</ul>
-
 		  	</section>
 		   	<section id="sec2" class="bigtitle">
 		    	<h2 class="bigtitle-title">LABORATORUL</h2>
@@ -56,6 +55,7 @@
 		    		<li><p>Ar fi bine sa vizitezi <a href="https://profs.info.uaic.ro/~busaco/teach/courses/web/web-film.html#week6">Pagina cursului - Saptamana 6</a></p></li>
 		    	</ul>
 		  	</section>
+		  	
 		</main>
 		<script>
 			function showDiv_curs() {
@@ -64,11 +64,10 @@
 				}
 				if(document.getElementById('ul_su_even').style.display = "block"){
 					document.getElementById('ul_su_even').style.display = "none";
-				}
-				document.getElementById('ul_su_curs').style.display = "block";
-				document.getElementById('ul_su_curs').style.background = "lightgrey";
 
-				document.getElementById('sec1').style.background = "lightblue";
+				}
+				document.getElementById('a_su_curs').style.display = "none";
+				document.getElementById('ul_su_curs').style.display = "block";
 			}
 			function showDiv_lab() {
 				if(document.getElementById('ul_su_curs').style.display = "block"){
@@ -78,7 +77,6 @@
 					document.getElementById('ul_su_even').style.display = "none";
 				}
 				document.getElementById('ul_su_lab').style.display = "block";
-				document.getElementById('ul_su_lab').style.background = "lightblue";
 			}
 			function showDiv_ev() {
 				if(document.getElementById('ul_su_curs').style.display = "block"){
@@ -88,7 +86,6 @@
 					document.getElementById('ul_su_lab').style.display = "none";
 				}
 				document.getElementById('ul_su_even').style.display = "block";
-				document.getElementById('ul_su_even').style.background = "lightblue";
 			}
 		</script>
  	 </body>

@@ -40,7 +40,4 @@ main{
   main {
      column-count: 1;
   }
-  .main_container {
-    column-count: 1;
-  }
 }
