@@ -134,11 +134,4 @@ input[type="password"] {
 }
 
 
-h2 {
-  font-family: "Nixie One", serif;
-  font-weight: 300; /* removes default bold styles */
-
-  margin: 0; /* removes default space */
-}
-
 
