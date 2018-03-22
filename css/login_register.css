@@ -8,7 +8,8 @@ body {
 }
 
 h1,
-.register{
+.register,
+.login{
   width:80%;
   margin: 0 auto;
 }
@@ -23,7 +24,7 @@ h1,
     flex-direction: column;
   }
 
-  h1, .register, .account, .contact {
+  h1, .register, .login {
     margin: 0;
     width: 80%;
   }
@@ -50,9 +51,20 @@ h1,
       grid-template-columns: 1fr 1fr;
       align-items: center;
     }
+
+    .login > div {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
+
     .register > div.actions {
       grid-template-columns: 1fr 1fr 1fr;
     }
+    .login > div.actions {
+      grid-template-columns:  2fr 1fr 1fr 1fr 2fr;
+    }
+
     .login > div.forget_password {
       grid-template-columns: 1fr;
       padding: 0;
@@ -60,15 +72,16 @@ h1,
     .register > div.actions {
       grid-template-columns: 2fr 1fr 1fr 1fr 2fr ;
     }
-    .account {
-      border-right: 1px dotted rgb(191, 216, 227);
-      padding: 0 10px 0 0;
-      align-self: end;
-      width: auto;
+    .login > div.actions {
+      grid-template-columns: 2fr 1fr 1fr 1fr 2fr;
     }
 
     input[type="submit"] {
       grid-column: 3;
+    }
+
+    .actions a {
+      justify-self: end;
     }
     
   }
@@ -103,12 +116,16 @@ h1 {
   padding: 5px 0;
 }
 
+.login > div {
+  padding: 5px 0;
+}
+
 input[type="submit"] {
   border: 1px solid rgba(191, 216, 227, .8);
   border-radius: 5px;
   color: #fff;
   background-color: #3498db;
-  font-size: 110%;
+  font-size: 120%;
 }
 
 
@@ -124,13 +141,23 @@ input[type="password"] {
   width: 100%;
 }
 
+.actions a {
+  font-size: 80%;
+}
+
 
 /*I've already have an account*/
 .register a{ 
   grid-column: 1;
 }
+
+.login a{
+  grid-column: 3;
+
+}
+
 .login div label{
-  text-align:right;
+  text-align:center;
 }
 
 
