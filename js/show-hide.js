@@ -124,3 +124,6 @@ function myFunction() {
     document.getElementById("demo").innerHTML = x;
 }
 */
+function to_home(){
+	redirect("students_index.html");
+}

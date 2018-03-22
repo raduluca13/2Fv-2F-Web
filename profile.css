@@ -25,3 +25,11 @@
     
   }
 }
+
+#to_home {
+  border: 1px solid rgba(191, 216, 227, .8);
+  border-radius: 5px;
+  color: #fff;
+  background-color: #3498db;
+  font-size: 110%;
+}
