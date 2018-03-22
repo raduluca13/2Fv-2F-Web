@@ -28,127 +28,205 @@
  		</nav>
   </header>
 <div class="main_container">
+
   <section id="sec1" class="bigtitle">
     <h2 class="bigtitle-title">COURSE SCORES</h2>
-    <a id="a_su_curs" href="#" onclick="showDiv_curs();return false;" class="info-link">Click here for details</a>
-    <div id="ul_su_curs" class="future_events">
-    <table>
-      <th>
-        <td>Nume</td>
-        <td>Prenume</td>
-        <td>C1</td>
-        <td>C2</td>
-        <td>C3</td>
-        <td>C4</td>
-        <td>C5</td>
-        <td>C6</td>
-        <td>C7</td>
-        <td>C8</td>
-        <td>C9</td>
-        <td>C10</td>
-        <td>C11</td>
-        <td>C12</td>
-        <td>C13</td>
-        <td>C14</td>
-      </th>
-      <tr>
-        <td></td>
-        <td>Popescu</td>
-        <td>Ion</td>
-        <td>0</td>
-        <td>5</td>
-        <td>0</td>
-        <td>5</td>
-        <td>5</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>Ionescu</td>
-        <td>Maria</td>
-        <td>3</td>
-        <td>2</td>
-        <td>5</td>
-        <td>4</td>
-        <td>5</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>Ionescu</td>
-        <td>Maria</td>
-        <td>3</td>
-        <td>2</td>
-        <td>5</td>
-        <td>4</td>
-        <td>5</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>Ionescu</td>
-        <td>Maria</td>
-        <td>3</td>
-        <td>2</td>
-        <td>5</td>
-        <td>4</td>
-        <td>5</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-      </tr>
+    <a id="a_su_curs" href="#" onclick="show_ranking_curs();return false;" class="info-link">Click here for details</a>
+    <table id="ul_su_curs" class="table_table">
+      <thead>
+        <tr>
+          <th>Last Name</th>
+          <th>First Name</th>
+          <th>C1</th>
+          <th>C2</th>
+          <th>C3</th>
+          <th>C4</th>     
+          <th>C5</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ionescu</td>
+          <td>Maria</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td>2</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>Ionescu</td>
+          <td>Maria</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td>2</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>Ionescu</td>
+          <td>Maria</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td>2</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>Ionescu</td>
+          <td>Maria</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td>2</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>Ionescu</td>
+          <td>Maria</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td>2</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>Ionescu</td>
+          <td>Maria</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td>2</td>
+          <td>4</td>
+        </tr>
+      </tbody>
     </table>
-      <a id="a_hide_c" class="info-link" href="#" onclick="hide_curs();return false;">Hide</a>
+    <input type="text" id="search_input_c" onkeyup="myFunction()" placeholder="Search for names..">
+    <a id="a_hide_c" class="info-link" href="#" onclick="hide_curs_c();return false;">Hide</a> 
   </section>
+
   <section id="sec2" class="bigtitle">
-    <h2 class="bigtitle-title">LABORATORY</h2>
-    <h3 class="subtitle">Do you want to improve you performance at laboratory?</h3>
-    <a id="a_su_lab" href="#" onclick="showDiv_lab();return false;" class="info-link">Click here for details</a>
-    <ul id="ul_su_lab" class="future_events">
-      <li>Urmatorul laborator este pe 29.03</li>
-      <li>You should check out: <a href="https://profs.info.uaic.ro/~busaco/teach/courses/web/web-film.html#week6">Pagina cursului - Saptamana 6</a></li>
-      <li><a id="a_hide_l" class="info-link" href="#" onclick="hide_lab();return false;">Hide</a></li>
-    </ul>
+    <h2 class="bigtitle-title">LABORATORY SCORES</h2>
+    <a id="a_su_lab" href="#" onclick="show_rankings_lab();return false;" class="info-link">Click here for details</a>
+    <table id="ul_su_lab" class="table_table">
+      <thead>
+        <tr>
+          <th>Last Name</th>
+          <th>First Name</th>
+          <th>C1</th>
+          <th>C2</th>
+          <th>C3</th>
+          <th>C4</th>     
+          <th>C5</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ionescu</td>
+          <td>Maria</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td>2</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>Ionescu</td>
+          <td>Maria</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td>2</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>Ionescu</td>
+          <td>Maria</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td>2</td>
+          <td>4</td>
+        </tr>
+      </tbody>
+    </table>
+    <input type="text" id="search_input_l" onkeyup="myFunction();" placeholder="Search for names..">
+    <a id="a_hide_l" class="info-link" href="#" onclick="hide_lab_c();return false;">Hide</a> 
   </section>
+
   <section id="sec3" class="bigtitle">
-    <h2 class="bigtitle-title">Alte Evenimente</h2>
-    <h3 class="subtitle">Vrei sa afli la ce evenimente poti participa?</h3>
-    <a id="a_su_even" href="#" onclick="showDiv_ev();return false;" class="info-link">Click here for details</a>
-    <ul id="ul_su_even" class="future_events">
-      <li>Urmatorul eveniment este pe 24.03</li>
-      <li>You should check out: <a href="https://profs.info.uaic.ro/~busaco/teach/courses/web/web-film.html#week6">Pagina cursului - Saptamana 6</a></li>
-      <li><a id="a_hide_ev" class="info-link" href="#" onclick="hide_ev();return false;">Hide</a></li>
-    </ul>
+    <h2 class="bigtitle-title">Other Events Standings</h2>
+    <a id="a_su_even" href="#" onclick="show_rankings_ev();return false;" class="info-link">Click here for details</a>
+    <table id="ul_su_even" class="table_table">
+      <thead>
+        <tr>
+          <th>Last Name/th>
+          <th>First Name</th>
+          <th>EV1</th>
+          <th>EV2</th>
+          <th>EV3</th>
+          <th>EV4</th>     
+          <th>EV5</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ionescu</td>
+          <td>Maria</td>
+          <td>3</td>
+          <td>-</td>
+          <td>5</td>
+          <td>-</td>
+          <td>4</td>
+        </tr><tr>
+          <td>Ionescu</td>
+          <td>Maria</td>
+          <td>3</td>
+          <td>-</td>
+          <td>5</td>
+          <td>-</td>
+          <td>4</td>
+        </tr><tr>
+          <td>Ionescu</td>
+          <td>Maria</td>
+          <td>3</td>
+          <td>-</td>
+          <td>5</td>
+          <td>-</td>
+          <td>4</td>
+        </tr><tr>
+          <td>Ionescu</td>
+          <td>Maria</td>
+          <td>3</td>
+          <td>-</td>
+          <td>5</td>
+          <td>-</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>Ionescu</td>
+          <td>Maria</td>
+          <td>-</td>
+          <td>4</td>
+          <td>-</td>
+          <td>2</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>Ionescu</td>
+          <td>Maria</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>2</td>
+          <td>4</td>
+        </tr>
+      </tbody>
+    </table>
+    <input type="text" id="search_input_e" onkeyup="myFunction()" placeholder="Search for names..">
+    <a id="a_hide_ev" class="info-link" href="#" onclick="hide_ev_c();return false;">Hide</a> 
   </section>
 </div>
   <script src="js/future_events.js" type="text/javascript"></script>

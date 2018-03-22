@@ -9,9 +9,14 @@ main{
 .bigtitle{
   text-align:center;
 }
+
 /* When clicked on, add a background color and strike out text */
 .future_events li.checked {
   text-decoration:none;
+}
+
+#a_hide_c, #a_hide_l, #a_hide_ev, #u_su_curs, #u_su_lab, #u_su_even, .future_events{
+  display:none;
 }
 /*#ul_su_curs,
 #a_su_curs:hover + #ul_su_curs, #a_su_lab:hover + #ul_su_lab, #a_su_even:hover + #ul_su_even {

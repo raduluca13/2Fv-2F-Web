@@ -174,9 +174,6 @@ p {
   display: block;
 }
 
-#a_hide_c, #a_hide_l, #a_hide_ev, #ul_su_curs, #ul_su_lab, #ul_su_even{
-  display:none;
-}
 .options {
   display: flex;
   align-items: center;
