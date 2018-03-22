@@ -174,6 +174,9 @@ p {
   display: block;
 }
 
+#a_hide_c, #a_hide_l, #a_hide_ev, #ul_su_curs, #ul_su_lab, #ul_su_even{
+  display:none;
+}
 .options {
   display: flex;
   align-items: center;
@@ -311,6 +314,12 @@ section {
   transform: rotate(45deg);
   height: 15px;
   width: 7px;
+}
+
+.future_events li a{
+  padding:10px;
+  text-decoration:none;
+  font-family: 'Ubuntu', sans-serif;
 }
 
 /* Style the close button */
