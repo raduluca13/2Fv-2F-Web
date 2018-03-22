@@ -14,7 +14,6 @@ main{
 .future_events li.checked {
   text-decoration:none;
 }
-
 #a_hide_c, #a_hide_l, #a_hide_ev, #u_su_curs, #u_su_lab, #u_su_even, .future_events{
   display:none;
 }
