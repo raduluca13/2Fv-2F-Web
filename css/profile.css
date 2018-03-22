@@ -1,0 +1,44 @@
+@supports (display: grid) {
+  body {
+    display: grid;
+    grid-template-columns: 80%;
+    align-content: center;
+    align-items: stretch;
+  }
+  @media (min-width: 650px) {
+    body {
+      grid-template-columns: repeat(2, minmax(150px, 20%));
+    }
+    h1,
+    .register {
+      grid-column-end: span 2;
+      width: auto;
+    }
+    .register > div {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
+    .register > div.actions {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    .login > div.forget_password {
+      grid-template-columns: 1fr;
+      padding: 0;
+    }
+    .register > div.actions {
+      grid-template-columns: 2fr 1fr 1fr 1fr 2fr ;
+    }
+    .account {
+      border-right: 1px dotted rgb(191, 216, 227);
+      padding: 0 10px 0 0;
+      align-self: end;
+      width: auto;
+    }
+
+    input[type="submit"] {
+      grid-column: 3;
+    }
+    
+  }
+}
