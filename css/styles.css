@@ -12,6 +12,9 @@
   section {
     break-inside: avoid;
   }
+  .options-link {
+    font-size: 1.4em;
+  }
 }
 
 @media (min-width: 960px) {
@@ -155,7 +158,10 @@ h2 {
   font-size: 1.4em;
   padding: 10px;
 }
-
+h3{
+  font-sie: 1.2em;
+  padding:10px;
+}
 p {
   margin-bottom: 1em;
   padding: 0 10px;
@@ -220,12 +226,6 @@ section {
   width: 80%;
   border-radius: 50%;
   margin-bottom: 10px;
-}
-
-@media (min-width: 620px) {
-  .options-link {
-    font-size: 1.4em;
-  }
 }
 
 .flex-container {

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  	<head>
+	    <title>Sugestii</title>
+	    <meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <link rel="stylesheet" href="css/reset.css">
+	    <link rel="stylesheet" href="css/styles.css">
+	    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+	    <link rel="stylesheet" href="css/sugestii.css">
+	</head>
+  	<body>
+	   	<header>
+	    	<h1 class="title">My WEB way!</h1>
+	     	<nav>
+	 			<ul id="nav_ul">
+	 				<li id="home_li" class="nav_item"><a id="a_frontpage" href="students_index.html">Home</a></li>
+	 				<li id="sugestii_li" class="nav_item"><a id="a_sugestii" href="sugestii.html">Sugestii</a></li>
+	 				<li id="catalog_li" class="nav_item"><a id="a_catalog" href="catalog.html" target="_blank">Catalog</a></li>
+	 				<li id="ddn" class="nav_item"><a id="a_profile" href="#">Profil</a>
+	 					<!--ul id="dropdown"-->
+	 						<!--li id="myprofile_li"><a id="a_myprofile" href="myprofile.html">Detalii</a></li-->
+	 						<!--li id="logout_li"><a id="a_logout" href="logout.html">Logout</a></li-->
+	 					<!--/ul-->
+	 				</li>
+	 			</ul>
+	 		</nav>
+	  	</header>
+		<main>
+			<section id="sec1" class="bigtitle">
+		    	<h2 class="bigtitle-title">COURSE</h2>
+		    	<h3 class="subtitle">What you should know about the course</p></h3>
+		    	<a id="a_su_curs" href="#" onclick="showDiv_curs();return false;" class="info-link">Click here for details</a>
+		    	<ul id="ul_su_curs" class="future_events">
+		    		<li>Next lecture on 28.03</li>
+		    		<li>You should check out:	<a href="https://profs.info.uaic.ro/~busaco/teach/courses/web/presentations/web01ArhitecturaWeb.pdf">Week 1 Presentation</a></li>
+		    		<li>You should check out:	<a href="https://profs.info.uaic.ro/~busaco/teach/courses/web/presentations/web01ArhitecturaWeb.pdf">Week 2 Presentation</a></li>
+		    		<li>You should check out:	<a href="https://profs.info.uaic.ro/~busaco/teach/courses/web/presentations/web01ArhitecturaWeb.pdf">Week 3 Presentation</a></li>
+		    		<li>You should check out:	<a href="https://profs.info.uaic.ro/~busaco/teach/courses/web/presentations/web01ArhitecturaWeb.pdf">Week 4 Presentation</a></li>
+		    		<li>You should check out:	<a href="https://profs.info.uaic.ro/~busaco/teach/courses/web/presentations/web01ArhitecturaWeb.pdf">Week 5 Presentation</a></li>
+		    	</ul>
+		  	</section>
+		   	<section id="sec2" class="bigtitle">
+		    	<h2 class="bigtitle-title">LABORATORY</h2>
+		    	<h3 class="subtitle">Do you want to improve you performance at laboratory?</p></h3>
+		    	<a id="a_su_lab" href="#" onclick="showDiv_lab();return false;" class="info-link">Click here to see suggestions</a>
+		    	<ul id="ul_su_lab" class="future_events">
+		    		<li><p>Urmatorul laborator este pe 29.03</p></li>
+		    		<li><p>You should check out: <a href="https://profs.info.uaic.ro/~busaco/teach/courses/web/web-film.html#week6">Pagina cursului - Saptamana 6</a></p></li>
+		    	</ul>
+		  	</section>
+		 	<section id="sec3" class="bigtitle">
+		    	<h2 class="bigtitle-title">Alte Evenimente</h2>
+		    	<h3 class="subtitle">Vrei sa afli la ce evenimente poti participa?</p></h3>
+		    	<a id="a_su_even" href="#" onclick="showDiv_ev();return false;" class="info-link">Apasa pentru a vedea sugestiile</a>
+		    	<ul id="ul_su_even" class="future_events">
+		    		<li><p>Urmatorul eveniment este pe 24.03</p></li>
+		    		<li><p>You should check out: <a href="https://profs.info.uaic.ro/~busaco/teach/courses/web/web-film.html#week6">Pagina cursului - Saptamana 6</a></p></li>
+		    	</ul>
+		  	</section>
+		  	
+		</main>
+		<script>
+			function showDiv_curs() {
+				if(document.getElementById('ul_su_lab').style.display = "block"){
+					document.getElementById('ul_su_lab').style.display = "none";
+					document.getElementById('a_su_lab').style.display = "block";
+				}
+				if(document.getElementById('ul_su_even').style.display = "block"){
+					document.getElementById('ul_su_even').style.display = "none";
+					document.getElementById('a_su_even').style.display = "block";
+
+				}
+				document.getElementById('ul_su_curs').style.display = "block";
+				document.getElementById('a_su_curs').style.display = "none";
+			}
+			function showDiv_lab() {
+				if(document.getElementById('ul_su_curs').style.display = "block"){
+					document.getElementById('ul_su_curs').style.display = "none";
+					document.getElementById('a_su_curs').style.display = "block";
+				}
+				if(document.getElementById('ul_su_even').style.display = "block"){
+					document.getElementById('ul_su_even').style.display = "none";
+					document.getElementById('a_su_even').style.display = "block";
+				}
+				document.getElementById('a_su_lab').style.display = "none";
+				document.getElementById('ul_su_lab').style.display = "block";
+			}
+			function showDiv_ev() {
+				if(document.getElementById('ul_su_curs').style.display = "block"){
+					document.getElementById('ul_su_curs').style.display = "none";
+					document.getElementById('a_su_curs').style.display = "block";
+				}
+				if(document.getElementById('ul_su_lab').style.display = "block"){
+					document.getElementById('ul_su_lab').style.display = "none";
+					document.getElementById('a_su_lab').style.display = "block";
+				}
+				document.getElementById('a_su_even').style.display = "none";
+				document.getElementById('ul_su_even').style.display = "block";
+			}
+		</script>
+ 	 </body>
+</html>
