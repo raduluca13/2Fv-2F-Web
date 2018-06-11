@@ -38,6 +38,7 @@ function jsLogin()
         if (id > 0)
         {
           setElementVisible('login_success');
+          setElementInvisible('login_failure');
           sleep(2500).then(() => {
             cookieUserLogin(id);
             CookieUserTypeLogin(user_type);

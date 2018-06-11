@@ -11,7 +11,7 @@
     <?php
     if (isset($this->js))
         foreach ($this->js as $js)
-            echo '<script type="text/javascript" src="' . URL . 'views/' . $js . '"></script>';
+            echo '<script type="application/javascript" src="' . URL . 'views/' . $js . '"></script>';
     if (isset($this->css))
         foreach ($this->css as $css)
             echo '<link rel="stylesheet" href="' . URL . 'views/' . $css . '"/>';

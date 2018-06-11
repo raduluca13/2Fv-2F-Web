@@ -3,6 +3,7 @@
 class Utils
 {
     private static $logintag = 'loggedIn';
+    private static $user_type = 'userType';
 
     public static function requiredArguments($methodType, $arguments)
     {
@@ -41,6 +42,14 @@ class Utils
             throw new Exception("Nu esti logat");
 
         return $_COOKIE[self::$logintag];
+    }
+
+    public static function UserGetType()
+    {
+        if(!isset($_COOKIE[self::$user_type]))
+            throw new Exception("Nu esti logat");
+
+        return $_COOKIE[self::$user_type];
     }
 
     public static function IsUserLogged($redirectNeeded = false)
