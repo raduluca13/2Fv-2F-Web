@@ -1,0 +1,175 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color:#34495e;
+  padding-top: 20%;
+}
+
+h1,
+.register,
+.login{
+  width:80%;
+  margin: 0 auto;
+}
+
+@supports (display: flex) {
+  body {
+    padding:0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  h1, .register, .login {
+    margin: 0;
+    width: 80%;
+  }
+}
+
+@supports (display: grid) {
+  body {
+    display: grid;
+    grid-template-columns: 80%;
+    align-content: center;
+    align-items: stretch;
+  }
+  @media (min-width: 650px) {
+    body {
+      grid-template-columns: repeat(2, minmax(150px, 20%));
+    }
+    h1,
+    .register, .login {
+      grid-column-end: span 2;
+      width: auto;
+    }
+    .register > div {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
+
+    .login > div {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
+
+    .register > div.actions {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    .login > div.actions {
+      grid-template-columns:  2fr 1fr 1fr 1fr 2fr;
+    }
+
+    .login > div.forget_password {
+      grid-template-columns: 1fr;
+      padding: 0;
+    }
+    .register > div.actions {
+      grid-template-columns: 2fr 1fr 1fr 1fr 2fr ;
+    }
+    .login > div.actions {
+      grid-template-columns: 2fr 1fr 1fr 1fr 2fr;
+    }
+
+    input[type="submit"] {
+      grid-column: 3;
+    }
+
+    .actions a {
+      justify-self: end;
+    }
+
+  }
+}
+
+h1 {
+  background-color: #3498db;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  padding: 10px;
+  font-size: 24px;
+  line-height: 1.4;
+}
+
+/*register and login grid default config*/
+.register {
+  background-color: #fff;
+  border: 3px solid #3498db;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  padding: 10px 10px;
+}
+.login {
+  background-color: #fff;
+  border: 3px solid #3498db;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  padding: 10px 10px;
+}
+
+.register > div {
+  padding: 5px 0;
+}
+
+.login > div {
+  padding: 5px 0;
+}
+
+input[type="submit"] {
+  border: 1px solid rgba(191, 216, 227, .8);
+  border-radius: 5px;
+  color: #fff;
+  background-color: #3498db;
+  font-size: 120%;
+}
+
+
+/* selector for all types of input */
+input[type="link"],
+input[type="email"],
+input[type="text"],
+input[type="password"] {
+  border: 1px solid rgba(191, 216, 227, .8);
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 110%;
+  width: 100%;
+}
+
+.actions a {
+  font-size: 80%;
+}
+
+
+/*I've already have an account*/
+.register a{
+  grid-column: 1;
+}
+
+.login a{
+  grid-column: 3;
+}
+
+.login div label{
+  text-align:center;
+}
+
+.actions button{
+  grid-column: 3;
+  border: 1px solid rgba(191, 216, 227, .8);
+  border-radius: 5px;
+  color: #fff;
+  background-color: #3498db;
+  font-size: 120%;
+}
+
+span {
+    display:none;
+    padding: 2px 5px;
+    color: #3498db;
+}

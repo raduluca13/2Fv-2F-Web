@@ -1,0 +1,31 @@
+body{
+    background-image: url("/public/images/error_fundal.jpg");
+    background-size: 100%;
+    background-position : top;
+    background-repeat: repeat-y;
+    width:98%;
+}
+
+.error {
+    display:block;
+    position: center;
+}
+
+.text {
+    font-family: "Times New Roman", serif, arial;
+    color: #1d2935;
+    margin-top:30vh;
+    margin-left:15%;
+    font-size: 5vw;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.reference {
+    font-family: "Times New Roman", serif, arial;
+    color: #4c6cd2;
+    margin-left:25%;
+    font-size: 5vw;
+    font-style: oblique;
+    font-variant: lining-nums;
+}

@@ -1,0 +1,16 @@
+login:
+    params: mail,password
+    return: true/false
+
+mailExists:
+    params: mail
+    return: true/false
+
+isAdmin:
+    params: mail
+    return: true/false
+
+register:
+    params: mail,password,lastname,firstname
+    return: true/false
+        false = mail already exists
