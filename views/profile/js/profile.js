@@ -46,7 +46,7 @@ function profileOnLoad()
     });
     var formConfirmPassword = new FormularConditionObject('confirm_password_error', function ()
     {
-        if ((getElementTextByID('pwd') === getElementTextByID('c_pwd')) || getElementTextByID('c_pwd') == "")
+        if ((getElementTextByID('pwd') === getElementTextByID('c_pwd')))
         {
           return true;
         }
@@ -59,10 +59,10 @@ function profileOnLoad()
     formConds.push(formFacebook);
     formConds.push(formPassword);
     formConds.push(formConfirmPassword);
-    activateErrorElemets(formConds);
 }
-
+/* Add user info and verify the forms */
 addLoadEvent(profileOnLoad);
+addLoadEvent(retrieve);
 
 function onBlur()
 {
@@ -73,18 +73,16 @@ function sleep (time) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
 
+/*POST method*/
 function jsProfile()
 {
-    // console.log(getElementTextByID('firstname'));
-    // console.log(getElementTextByID('lastname'));
-    // console.log(getElementTextByID('git'));
-    // console.log(getElementTextByID('fb'));
-    // console.log(getElementTextByID('pwd'));
+
+    console.log(getElementTextByID('pwd'));
 
     if (!activateErrorElemets(formConds))
         return;
-
     ajax.post('api/profile', {
+        id: cookieGetLoggedUserID(),
         firstName: getElementTextByID('firstname'),
         lastName: getElementTextByID('lastname'),
         gitHub: getElementTextByID('git'),
@@ -92,19 +90,40 @@ function jsProfile()
         password: getElementTextByID('pwd')
     }, function (text)
     {
-        if (text === 'true')
-        {
-            setElementVisible('profile_success');
-            sleep(2500).then(() => {
-            window.location.replace("/login");
-            })
-        }
-        else
-        {
-            setElementVisible('profile_failure');
-            sleep(2500).then(() => {
-            window.location.replace("/profile");
-            })
-        }
+    if (text === 'true')
+    {
+        console.log("Totul a fost ok!");
+        setElementVisible('profile_success');
+        sleep(2500).then(() => {
+        window.location.replace("/login");
+        })
+    }
+    else
+    {
+        console.log("Nu a fost ok!");
+        setElementVisible('profile_failure');
+        sleep(2500).then(() => {
+        window.location.replace("/profile");
+        })
+    }
     });
 }
+/*POST method*/
+
+
+/*GET method*/
+function retrieve()
+{
+    ajax.get('api/profile', { id: cookieGetLoggedUserID() }, function (response)
+    {
+        if (response !== null)
+        {
+            document.getElementById('firstname').value = response.split(" ")[0];
+            document.getElementById('lastname').value = response.split(" ")[1];
+            document.getElementById('git').value = response.split(" ")[2];
+            document.getElementById('fb').value = response.split(" ")[3];
+        }
+    });    
+}
+/*GET method*/
+

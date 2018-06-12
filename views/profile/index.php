@@ -35,7 +35,7 @@
 
         <div>
             <label for="profile">Password</label>
-            <input type="password" name="password" id="pwd" onblur="onBlur()">
+            <input type="password" name="password" id="pwd" placeholder="optional" onblur="onBlur()">
 						<span id="password_error">Enter a password longer than 8 characters</span>
 
         </div>
@@ -48,6 +48,8 @@
 
         <div class="actions">
                 <!--<input type="submit" id="edit_fb" name="register" onclick="jsProfile()" value="Edit">-->
-            <button type="button" onclick="jsProfile()">Edit</button>
+            <button type="button" id="home_button" href="/login">Home</button>
+            <button type="button" id="edit_button" onclick="jsProfile()">Edit</button>
+            
         </div>
 	</form>

@@ -64,12 +64,52 @@ class User_Services extends Services
         return $sth->execute();
     }
 
-    public function profile($firstName, $lastName,$githubAccount,$facebookAccount,$password )
+    public function profile($id, $firstName, $lastName,$githubAccount,$facebookAccount,$password ) /*Marius Cretu*/
     {
-        $password = md5($password);
-        $sth = $this->db->GetConn()->prepare("UPDATE tw.users SET first_name = ?, last_name = ?, github_account = ?, facebook_account = ?, password = ? WHERE id = 18");
-        $sth->bind_param("sssss",$firstName, $lastName,$githubAccount,$facebookAccount, $password);
+
+        $sth = $this->db->GetConn()->prepare("SELECT password FROM tw.users WHERE id = ?");
+        $sth->bind_param("i",$id);
+        $sth->execute();
+        $pwd = null;
+        $sth->bind_result($pwd);
+        while ($sth->fetch())
+        {
+        }
+        /*
+        */
+        $sth = $this->db->GetConn()->prepare("UPDATE tw.users SET first_name = ?, last_name = ?, github_account = ?, facebook_account = ?, password = ? WHERE id = ?");
+        if($password !== "") 
+        { 
+            $password = md5($password);
+            $sth->bind_param("sssssi",$firstName, $lastName,$githubAccount,$facebookAccount, $password, $id);
+        }
+        else
+        {
+            $sth->bind_param("sssssi",$firstName, $lastName,$githubAccount,$facebookAccount, $pwd, $id);
+        }
         return $sth->execute();
+    }
+
+    public function retrieve_profile_info($id) /*Marius Cretu*/
+    {
+        
+        $sth = $this->db->GetConn()->prepare("SELECT first_name, last_name, github_account, facebook_account, password FROM tw.users WHERE id = ?");
+        $sth->bind_param("i", $id);
+        $sth->execute();
+
+        $firstName = null;
+        $lastName = null;
+        $githubAccount = null;
+        $facebookAccount = null;
+        $password = null;
+        
+        $sth->bind_result($firstName,$lastName,$githubAccount,$facebookAccount, $password);
+        while ($sth->fetch())
+        {
+        }
+        if ($firstName !== null) //all good
+            return array($firstName,$lastName,$githubAccount,$facebookAccount, $password);
+        return null;
     }
 
     public function deleteAccount($mail)//only admin can see this

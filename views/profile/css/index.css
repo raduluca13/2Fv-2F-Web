@@ -152,7 +152,17 @@ input[type="password"] {
 }
 
 .actions button{
-    grid-column: 3;
+  margin-left: 10px;
+    grid-column: 1;
+    border: 1px solid rgba(191, 216, 227, .8);
+    border-radius: 5px;
+    color: #fff;
+    background-color: #3498db;
+    font-size: 120%;
+}
+#edit_button{
+  margin-right: 10px;
+    grid-column: 4;
     border: 1px solid rgba(191, 216, 227, .8);
     border-radius: 5px;
     color: #fff;
@@ -182,11 +192,7 @@ input[type="password"] {
             align-items: center;
         }
         .register > div.actions {
-            grid-template-columns: 1fr 1fr 1fr;
-        }
-        .login > div.forget_password {
-            grid-template-columns: 1fr;
-            padding: 0;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
         }
 
         input[type="submit"] {
