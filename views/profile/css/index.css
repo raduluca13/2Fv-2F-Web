@@ -151,7 +151,7 @@ input[type="password"] {
   text-align:center;
 }
 
-.actions button{
+#home_button{
   margin-left: 10px;
     grid-column: 1;
     border: 1px solid rgba(191, 216, 227, .8);

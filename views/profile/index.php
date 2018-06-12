@@ -48,7 +48,7 @@
 
         <div class="actions">
                 <!--<input type="submit" id="edit_fb" name="register" onclick="jsProfile()" value="Edit">-->
-            <button type="button" id="home_button" href="/login">Home</button>
+            <input type="button" id="home_button" value="Home" onclick="window.location.href='/home'" />
             <button type="button" id="edit_button" onclick="jsProfile()">Edit</button>
             
         </div>
