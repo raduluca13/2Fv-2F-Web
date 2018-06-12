@@ -5,7 +5,7 @@
 				<li id="home_li" class="nav_item"><a id="a_frontpage" href="/home">Home</a></li>
 				<li id="sugestii_li" class="nav_item"><a id="a_sugestii" href="/sugestii">Suggestions</a></li>
 				<li id="catalog_li" class="nav_item"><a id="a_catalog" href="/catalog">Rankings</a></li>
-				<li id="ddn" class="nav_item"><a id="a_profile" href="/profil">Profile</a>
+				<li id="ddn" class="nav_item"><a id="a_profile" href="/profile">Profile</a>
 					<!--ul id="dropdown"-->
 						<!--li id="myprofile_li"><a id="a_myprofile" href="myprofile.html">Detalii</a></li-->
 						<!--li id="logout_li"><a id="a_logout" href="logout.html">Logout</a></li-->
