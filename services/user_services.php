@@ -111,6 +111,57 @@ class User_Services extends Services
             return array($firstName,$lastName,$githubAccount,$facebookAccount, $password);
         return null;
     }
+	
+	public function retrieve_c_s($id) /*Marius Cretu*/
+    {
+        $rows = array();
+        /*array to store the info that we want to retrieve*/
+
+        $sth = $this->db->GetConn()->prepare("SELECT date from tw.sugestii where date >= STR_TO_DATE(SYSDATE(),'%Y-%m-%d') and s_id = 1 order by 1 asc limit 1;");
+        $sth->execute();
+        $next_date = null;
+        $sth->bind_result($next_date);
+        while($sth->fetch()){
+            array_push($rows, $next_date);
+        }
+        /*retrieve the very next date event*/
+
+        $sth = $this->db->GetConn()->prepare("SELECT description, associated, date from tw.sugestii s inner join tw.s_types st on s.s_id = st.id where st.id = 1 and s.date >= STR_TO_DATE(SYSDATE(),'%Y-%m-%d') order by s.date asc limit 3;");
+        $sth->execute();
+
+        $desc = null;
+        $asc = null;
+        $dt = null;
+        $sth->bind_result($desc, $asc, $dt);
+        while($sth->fetch()){
+            array_push($rows, $desc, $asc, $dt);
+        }
+
+        $sth = $this->db->GetConn()->prepare("SELECT date from tw.sugestii where date >= STR_TO_DATE(SYSDATE(),'%Y-%m-%d') and s_id = 2 and description like 'Laboratory%' order by 1 asc limit 1;");
+        $sth->execute();
+        $next_date = null;
+        $sth->bind_result($next_date);
+        while($sth->fetch()){
+            array_push($rows, $next_date);
+        }
+
+        $sth = $this->db->GetConn()->prepare("SELECT description, associated, date from tw.sugestii s inner join tw.s_types st on s.s_id = st.id where st.id = 2 and s.date >= STR_TO_DATE(SYSDATE(),'%Y-%m-%d') order by s.date asc limit 3;");
+        $sth->execute();
+
+        $desc = null;
+        $asc = null;
+        $dt = null;
+        $sth->bind_result($desc, $asc, $dt);
+        while($sth->fetch()){
+            array_push($rows, $desc, $asc, $dt);
+        }
+        
+        /*retrieve the description, associated links and the date*/
+
+        if ($rows !== null) //all good
+            return $rows;
+        return null;
+    }
 
     public function deleteAccount($mail)//only admin can see this
     {
