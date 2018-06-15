@@ -23,7 +23,7 @@ CREATE TABLE `categorii_punctaje` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nume` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of categorii_punctaje
@@ -38,9 +38,9 @@ INSERT INTO `categorii_punctaje` VALUES ('3', 'proiect');
 DROP TABLE IF EXISTS `evenimente`;
 CREATE TABLE `evenimente` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `eveniment` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `eveniment` varchar(1000) CHARACTER SET utf8 COLLATE utf8_romanian_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_romanian_ci;
 
 -- ----------------------------
 -- Records of evenimente
@@ -108,7 +108,7 @@ CREATE TABLE `external` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `src` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of external
@@ -120,7 +120,7 @@ CREATE TABLE `external` (
 DROP TABLE IF EXISTS `note`;
 CREATE TABLE `note` (
   `id` varchar(11) NOT NULL,
-  `nr_matricol` varchar(13) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `nr_matricol` varchar(13) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `categorie` varchar(11) NOT NULL,
   `valoare` varchar(11) NOT NULL,
   `data_notare` date NOT NULL,
@@ -128,7 +128,7 @@ CREATE TABLE `note` (
   `saptamana` int(11) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `id` (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of note
@@ -154,7 +154,7 @@ CREATE TABLE `plan_grupe` (
   `grupa` varchar(2) NOT NULL,
   `id_prof` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of plan_grupe
@@ -172,7 +172,7 @@ CREATE TABLE `prezente` (
   `id_prof` int(11) NOT NULL,
   `week` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of prezente
@@ -201,7 +201,7 @@ CREATE TABLE `profesori` (
   `prenume` text NOT NULL,
   `email` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of profesori
@@ -313,7 +313,7 @@ CREATE TABLE `users` (
   `gender` varchar(255) NOT NULL,
   `user_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users
