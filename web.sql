@@ -120,7 +120,7 @@ CREATE TABLE `external` (
 DROP TABLE IF EXISTS `note`;
 CREATE TABLE `note` (
   `id` varchar(11) NOT NULL,
-  `nr_matricol` varchar(13) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `nr_matricol` varchar(13) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `categorie` varchar(11) NOT NULL,
   `valoare` varchar(11) NOT NULL,
   `data_notare` date NOT NULL,
@@ -128,7 +128,7 @@ CREATE TABLE `note` (
   `saptamana` int(11) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `id` (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of note

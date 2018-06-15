@@ -14,7 +14,7 @@ function loginOnLoad(){
 
      var formCondEmail2 = new FormularConditionObject('saptamana_error', function ()
     {
-        var re = /^(([0-9]{1}+))/;
+        var re = /^([0-9]+)/;
         return re.test(String(getElementTextByID('saptamana')).toLowerCase());
     });
     formConds.push(formCondEmail);

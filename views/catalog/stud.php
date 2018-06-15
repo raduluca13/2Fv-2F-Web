@@ -138,7 +138,6 @@ function hide(category){
     document.getElementById('a_show_e').style.display = "block";
   }
 }
-
 </script>
 
 <header>

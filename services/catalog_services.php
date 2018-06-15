@@ -32,23 +32,23 @@ class catalog_services extends Services
 
 	public function getPrezenteCurs($id=null){
 		if($id==null){
-			$query = "SELECT p.nr_matricol, u.nume, u.prenume, p.saptamana FROM tw.prezente p join tw.users u on p.nr_matricol = u.nr_matricol where p.categorie=1";
+			$query = "SELECT p.nr_matricol, u.first_name, u.last_name, p.week FROM tw.prezente p join tw.users u on p.nr_matricol = u.nr_matricol where p.categorie=1";
 
 			$arr = array('prezente_curs'=>array());
 			$prezenteCurs = array();
 
 			$stmt = $this->db->getConn()->prepare($query);
 			$stmt->execute();
-			$stmt->bind_result($nr_matr,$sapt);
+			$stmt->bind_result($nr_matr, $fn, $ln, $sapt);
 
 			while($stmt->fetch()){
-				array_push($prezenteCurs,array($nr_matr, $sapt));
+				array_push($prezenteCurs,array($nr_matr, $fn, $ln, $sapt));
 			}
 			$arr['prezente_curs'] = $prezenteCurs;
 
 		}
 			else{
-			$query = "SELECT p.nr_matricol, u.first_name, u.last_name, p.saptamana FROM tw.prezente p join tw.users u on p.nr_matricol=u.nr_matricol where p.categorie=1 and u.id=?";
+			$query = "SELECT p.nr_matricol, u.first_name, u.last_name, p.week FROM tw.prezente p join tw.users u on p.nr_matricol=u.nr_matricol where p.categorie=1 and u.id=?";
 
 			$arr = array('prezente_curs'=>array());
 			$prezenteCurs = array();
@@ -69,7 +69,7 @@ class catalog_services extends Services
 	}
 	public function getPrezenteLab($id=null){
 		if($id==null){
-			$query = "SELECT nr_matricol, saptamana FROM tw.prezente where categorie=2";
+			$query = "SELECT nr_matricol, week FROM tw.prezente where categorie=2";
 
 			$arr = array('prezente_lab'=>array());
 			$prezenteLab = array();
@@ -82,7 +82,7 @@ class catalog_services extends Services
 			}
 			$arr['prezente_lab'] = $prezenteLab;
 		}else{
-			$query = "SELECT p.nr_matricol, p.saptamana FROM tw.prezente p join tw.prezente u on p.nr_matricol=u.nr_matricol where p.categorie=2 and u.id=?";
+			$query = "SELECT p.nr_matricol, p.week FROM tw.prezente p join tw.prezente u on p.nr_matricol=u.nr_matricol where p.categorie=2 and u.id=?";
 
 			$arr = array('prezente_lab'=>array());
 			$prezenteLab = array();
@@ -107,7 +107,7 @@ class catalog_services extends Services
 	public function getNoteLab($id=null){
 
 		if($id==null){
-			$query = "SELECT u.nr_matricol, u.first_name, u.last_name, n.valoare, n.saptamana FROM tw.note n join tw.users u on n.nr_matricol = u.nr_matricol where n.categorie=2";
+			$query = "SELECT n.nr_matricol, u.first_name, u.last_name, n.valoare, n.saptamana FROM tw.note n join tw.users u on n.nr_matricol = u.nr_matricol where n.categorie=2";
 			// $query = "select nr_matricol, valoare, saptamana from tw.note where categorie=2";
 			$arr = array('note_lab'=>array());
 			$noteLab = array();
@@ -146,7 +146,7 @@ class catalog_services extends Services
 		while($s->fetch());
 		$id=$id+1;
 
-        $query = "INSERT INTO prezente(nr_matricol,categorie,saptamana) VALUES (?,1,?)";
+        $query = "INSERT INTO prezente(nr_matricol,categorie,week) VALUES (?,1,?)";
         $sth = $this->db->getConn()->prepare($query);
         $sth->bind_param("sd", $nr_matricol, $saptamana);
         return $sth->execute();
@@ -159,7 +159,7 @@ class catalog_services extends Services
 		while($s->fetch());
 		$id=$id+1;
 
-		$query = "INSERT INTO prezente(id,nr_matricol,categorie,saptamana) VALUES (?,?,2,?)";
+		$query = "INSERT INTO prezente(id,nr_matricol,categorie,week) VALUES (?,?,2,?)";
         $sth = $this->db->getConn()->prepare($query);
         $sth->bind_param("dsd", $id, $nr_matricol, $saptamana);
         return $sth->execute();
@@ -173,7 +173,7 @@ class catalog_services extends Services
 		while($s->fetch());
 		$id=$id+1;
 
-		$query = "INSERT INTO note(id,nr_matricol,categorie,valoare,data_notare,saptamana) VALUES (?,?,2,?,?,?)";
+		$query = "INSERT INTO note(id,nr_matricol,categorie,valoare,data_notare,week) VALUES (?,?,2,?,?,?)";
         $sth = $this->db->getConn()->prepare($query);
         $sth->bind_param("dsdsd", $id, $nr_matricol, $nota,$facebookAccount,$data_notare,$saptamana);
         return $sth->execute();
