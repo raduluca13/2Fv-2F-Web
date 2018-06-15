@@ -1,3 +1,9 @@
+
+<script>
+  PopulateChances()
+  PopulateEvents()
+</script>
+
  <header>
    <h1 class="title">My WEB way!</h1>
    <nav>
@@ -5,7 +11,8 @@
 				<li id="home_li" class="nav_item"><a id="a_frontpage" href="/home">Home</a></li>
 				<li id="sugestii_li" class="nav_item"><a id="a_sugestii" href="/sugestii">Suggestions</a></li>
 				<li id="catalog_li" class="nav_item"><a id="a_catalog" href="/catalog">Rankings</a></li>
-				<li id="ddn" class="nav_item"><a id="a_profile" href="/profile">Profile</a>
+				<li id="profile" class="nav_item"><a id="a_profile" href="/profile">Profile</a>
+          <li id="ddn" class="nav_item"><a id="logout" href="javascript:logout();">Logout</a>
 					<!--ul id="dropdown"-->
 						<!--li id="myprofile_li"><a id="a_myprofile" href="myprofile.html">Detalii</a></li-->
 						<!--li id="logout_li"><a id="a_logout" href="logout.html">Logout</a></li-->
@@ -15,34 +22,34 @@
 		</nav>
 </header>
 <main>
-<section style="min-height:1000px;">
+<section style="min-height:550px;">
   <h2 class="bigtitle-title">Promovability calculator</h2>
 
-  <div style="background-color:#5aaadb; width:200px; margin:auto; border: 3px solid var(--light_blue);" ><img src="/public/images/smiley_face.png" alt="smiley face" style="width:200px"/></div>
+  <div style="background-color:#5aaadb; width:200px; margin:auto; border: 3px solid var(--light_blue);" ><img src="/public/images/smiley_face.png" alt="smiley face" style="width:200px" id="face"/></div>
   <div class="prmovability" style="width:75%;margin-left:5%; margin-top:40px;">
     <span>Courses attendances:</span>
     <div class="progress" style="margin-bottom:10px;">
-          <span style="width: 20%;"><span>20%</span></span>
+          <span style="width: 20%;" id="courses_attendances"><span id="courses_attendances_value">20%</span></span>
     </div>
 
     <span>Laboratories attendances:</span>
     <div class="progress" style="margin-bottom:10px;">
-      <span class="green" style="width: 40%;"><span>40%</span></span>
+      <span class="green" style="width: 40%;" id="laboratories_attendances"><span id="laboratories_attendances_value">40%</span></span>
     </div>
 
     <span>WEB events attendances:</span>
     <div class="progress" style="margin-bottom:10px;">
-      <span class="orange" style="width: 60%;"><span>60%</span></span>
+      <span class="orange" style="width: 60%;" id="web_events"><span id="web_events_value">60%</span></span>
     </div>
 
     <span>Project situation:</span>
     <div class="progress" style="margin-bottom:10px;">
-      <span class="red" style="width: 80%;"><span>80%</span></span>
+      <span class="red" style="width: 80%;" id="project_situation"><span id="project_situation_value">80%</span></span>
     </div>
 
     <span>Promovability chance:</span>
     <div class="progress">
-      <span class="blue" style="width: 55%;"><span>55%</span></span>
+      <span class="blue" style="width: 55%;" id="promovability_chance"><span id="promovability_chance_value">55%</span></span>
     </div>
   </div>
 
@@ -89,22 +96,22 @@
   		})
 	</script>
 </section>
- <section class="bigtitle">
+ <section class="bigtitle" min-heigt="470">
   <h2 class="bigtitle-title">Github </h2>
-  <img src="/public/images/chart-blue.png" alt="chart blue" style="width:100%;"/>
-  <a href="#" class="info-link">See your repo...</a>
+  <iframe allowtransparency="true" frameborder="0" scrolling="yes" seamless="seamless"
+  src=""; width="100%" height="470" max-height="470" min-height="470" style="margin-bottom:0%;" id="github_frame"></iframe>
 </section>
 <section class="bigtitle">
   <h2 class="bigtitle-title">WEB events</h2>
   <ul class="future_events">
-    <li class="future_events_li">SmashingConf San Francisco, USA (April 17-18, 2018)</li>
-    <li class="future_events_li checked">App Promotion Summit London, UK(March, 2018)</li>
-    <li class="future_events_li">Experience Conference Bratislava, Slowakia(March 27, 2018)</li>
-    <li class="future_events_li">DevConf 2018 Johannesburg, South Africa(March 27, 2018)</li>
-    <li class="future_events_li">University of Illinois Web Conference 2018(April 4-6, 2018)</li>
-    <li class="future_events_li">RWDevCon 2018 Alexandria, VA, USA(April 5-7, 2018)</li>
+    <li class="future_events_li" id="future1"></li>
+    <li class="future_events_li" id="future2"></li>
+    <li class="future_events_li" id="future3"></li>
+    <li class="future_events_li" id="future4"></li>
+    <li class="future_events_li" id="future5"></li>
+    <li class="future_events_li" id="future6"></li>
   </ul>
   <script src="/views/students_home/js/future_events.js" type="text/javascript"></script>
-  <a href="#" class="info-link">See more events</a>
+  <a href="/sugestii" class="info-link">See more events</a>
 </section>
 </main>

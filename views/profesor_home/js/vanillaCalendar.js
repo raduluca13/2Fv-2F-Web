@@ -57,6 +57,7 @@ var vanillaCalendar = {
     if (this.date.toString() === this.todaysDate.toString()) {
       newDay.classList.add('vcal-date--today')
     }
+
     newDay.appendChild(dateEl)
     this.month.appendChild(newDay)
   },

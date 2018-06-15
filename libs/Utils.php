@@ -39,8 +39,9 @@ class Utils
     public static function UserGetId()
     {
         if(!isset($_COOKIE[self::$logintag]))
-            throw new Exception("Nu esti logat");
-
+        {
+          throw new Exception("Nu esti logat");
+        }
         return $_COOKIE[self::$logintag];
     }
 

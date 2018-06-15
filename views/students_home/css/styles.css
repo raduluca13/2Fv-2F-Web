@@ -80,7 +80,7 @@ ul{
   height:100%;
 	position:relative;
 	grid-auto-rows: 1fr;
-	grid-template-columns: repeat(4, 1fr);
+	grid-template-columns: repeat(5, 1fr);
 }
 
 .nav_item a{
@@ -109,6 +109,10 @@ ul{
 #catalog_li{
 	grid-row:1;
 	grid-column:3;
+}
+#profile{
+	grid-row:1;
+	grid-column:4;
 }
 #ddn a{
 	border-top-right-radius: 17px;

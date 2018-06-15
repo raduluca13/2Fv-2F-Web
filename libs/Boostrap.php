@@ -21,6 +21,7 @@ class Boostrap
             require 'controllers/index.php';
             $controller = new Index();
             $controller->index();
+            echo "am ajuns aici2";
             return false;
         }
 

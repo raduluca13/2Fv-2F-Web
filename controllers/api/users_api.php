@@ -25,8 +25,9 @@ class users_api
         $result = $this->userServices->login($username, $password);
         $id = $result[0];
         $user_type = $result[1];
+        $github_account = $result[2];
         if ($id == null)
             $id = 0;
-        echo $result[0] . ' ' . $result[1];
+        echo $result[0] . ' ' . $result[1] . ' ' . $result[2];
     }
 }

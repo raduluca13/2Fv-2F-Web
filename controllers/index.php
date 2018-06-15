@@ -6,6 +6,7 @@ class Index extends Controller
     {
         parent::__construct();
         Utils::IsUserLogged(true);
+        echo "si aici3";
         if(Utils::UserGetId()==1){
             header('Location: /login');
         }
@@ -13,7 +14,8 @@ class Index extends Controller
 
     function index()
     {
-        // no need of function index
+      if(!Utils::IsUserLogged(false)) header('Location: /login');
+      else header('Location: /home');
     }
 }
 ?>

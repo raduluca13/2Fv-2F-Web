@@ -80,7 +80,7 @@ ul{
   height:100%;
 	position:relative;
 	grid-auto-rows: 1fr;
-	grid-template-columns: repeat(4, 1fr);
+	grid-template-columns: repeat(5, 1fr);
 }
 
 .nav_item a{
@@ -102,13 +102,13 @@ ul{
 	border-top-left-radius: 17px;
 	border-bottom-left-radius: 17px;
 }
-/*#sugestii_li{
+#sugestii_li{
 	grid-row:1;
 	grid-column:2;
-}*/
+}
 #catalog_li{
 	grid-row:1;
-	grid-column:2;
+	grid-column:3;
 }
 #ddn a{
 	border-top-right-radius: 17px;
@@ -428,9 +428,4 @@ section {
   background-image: -moz-linear-gradient(top, #aed5ed, #7bbbe2 70%, #5aaadb);
   background-image: -o-linear-gradient(top, #aed5ed, #7bbbe2 70%, #5aaadb);
   background-image: linear-gradient(to bottom, #aed5ed, #7bbbe2 70%, #5aaadb);
-}
-
-#profile{
-	grid-row:1;
-	grid-column:3;
 }

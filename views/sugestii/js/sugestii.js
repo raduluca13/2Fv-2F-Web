@@ -2,10 +2,10 @@
 
 function verify_nullable(link){
     return (link === "");
-    
+
 }
 
-var changeText = function(content){ 
+var changeText = function(content){
 
     /*=======================================COURSES=======================================*/
     if(today() !== content[0]) document.getElementById("d_item0").innerHTML = content[0]; /*The next event date.*/
@@ -55,7 +55,7 @@ var changeText = function(content){
 
     document.getElementById("l_item3").innerHTML = content[17]; /*The third event description */
     if(!verify_nullable(content[18])) { document.getElementById("l_a_item3").href = content[18]; document.getElementById("l_a_item3").innerHTML = "link"; }
-    else document.getElementById("l_a_item3").innerHTML = ""; 
+    else document.getElementById("l_a_item3").innerHTML = "";
 
     if(today() !== content[19]) document.getElementById("l_d_item3").innerHTML = 'Posted ' + content[19];
     else document.getElementById("l_d_item3").innerHTML = "Posted Today";
@@ -71,13 +71,13 @@ function today(){
 
     if(dd<10) {
         dd = '0'+dd
-    } 
+    }
 
     if(mm<10) {
         mm = '0'+mm
     }
     today = yyyy + '-' + mm + '-' + dd;
-    return today; 
+    return today;
 }
 
 
@@ -91,16 +91,33 @@ function retrieve_courses()
             var count = 0;
             var text = [];
             while(count < 20){
-               
-                var str = response.split(" end ")[count];
-                text.push(str); 
 
-                count += 1;   
+                var str = response.split(" end ")[count];
+                text.push(str);
+
+                count += 1;
             }
             changeText(text);
         }
-            
-    });    
+
+    });
 }
+
+function PopulateEvents()
+{
+  ajax.get('api/getevents',{
+  }, function (events)
+  {
+    events = events.split("#!#");
+    document.getElementById("future1").textContent=events[0];
+    document.getElementById("future2").textContent=events[1];
+    document.getElementById("future3").textContent=events[2];
+    document.getElementById("future4").textContent=events[3];
+    document.getElementById("future5").textContent=events[4];
+    document.getElementById("future6").textContent=events[5];
+  });
+}
+
 /*GET method*/
 addLoadEvent(retrieve_courses);
+addLoadEvent(PopulateEvents);

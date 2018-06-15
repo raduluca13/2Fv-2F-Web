@@ -27,7 +27,6 @@ addLoadEvent(principalLoad);
 
 var loginCookieName = 'loggedIn';
 var userType = "userType";
-var github_account = "githubAccount"
 
 function setCookie(name, value, timeout)
 {
@@ -42,11 +41,6 @@ function cookieUserLogin(id)
 function CookieUserTypeLogin(value)
 {
     setCookie(userType, value, new Date(Date.now() + 86400));//one day
-}
-
-function CookieGithubAccountLogin(value)
-{
-    setCookie("githubAccount", value, new Date(Date.now() + 86400));//one day
 }
 
 function cookieIsUserLoggedIn()
@@ -70,26 +64,9 @@ function GetUserTypeCookieValue()
     return 0;
 }
 
-function GetGithubAccountCookieValue()
-{
-  var ca = document.cookie.split(';');
-  for(var i=0;i < ca.length;i++) {
-      if(ca[i].toString().substr(1,github_account.length)===github_account)
-      {
-          var value = ca[i].toString().split('=')[1];
-          return value;
-          break;
-      }
-    }
-    alert("Bad cookie");
-    return 0;
-}
-
 function cookieUserLogout()
 {
     document.cookie = loginCookieName + "=; max-age=-2";
-    document.cookie = userType + "=; max-age=-2";
-    document.cookie = github_account + "=; max-age=-2";
 }
 
 function cookieGetLoggedUserID()
@@ -110,21 +87,6 @@ function cookieGetLoggedUserID()
         }
         //while (c.charAt(0)==' ') c = c.substring(1,c.length);
         //if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-    }
-    alert("EROARE! NU AR TREBUI SA AJUNGA AICI! BAD COOKIE");
-    return 0;
-}
-
-function cookieGetUserID()
-{
-    var ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++) {
-        if(ca[i].toString().substr(0,loginCookieName.length)===loginCookieName)
-        {
-            var value = ca[i].toString().split('=')[1];
-            return value;
-            break;
-        }
     }
     alert("EROARE! NU AR TREBUI SA AJUNGA AICI! BAD COOKIE");
     return 0;

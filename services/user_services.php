@@ -10,18 +10,19 @@ class User_Services extends Services
     public function login($username, $password)
     {
         $password = md5($password);
-        $sth = $this->db->GetConn()->prepare("SELECT id,user_type FROM tw.users WHERE username = ? AND password = ?");
+        $sth = $this->db->GetConn()->prepare("SELECT id,user_type,github_account FROM tw.users WHERE username = ? AND password = ?");
         $sth->bind_param("ss", $username,$password);
         $sth->execute();
 
         $count=null;
         $user_type=null;
-        $sth->bind_result($count,$user_type);
+        $githubAccount=null;
+        $sth->bind_result($count,$user_type,$githubAccount);
         while ($sth->fetch())
         {
         }
         if ($count > 0) //login
-            return array($count,$user_type);
+            return array($count,$user_type,$githubAccount);
         return null;
     }
 
@@ -59,8 +60,19 @@ class User_Services extends Services
             return false;
         $password = md5($password);
         $user_type = "stud";
-        $sth = $this->db->GetConn()->prepare("INSERT INTO tw.Users(username,password,first_name,last_name,github_account,facebook_account,gender,user_type) VALUES (?,?,?,?,?,?,?,?)");
-        $sth->bind_param("ssssssss", $username, $password, $firstname, $lastname,$githubAccount,$facebookAccount,$gender,$user_type);
+
+        $value=1000000;
+        $sth = $this->db->GetConn()->prepare("SELECT MAX(CAST((substr(nr_matricol,2,length(nr_matricol))) as SIGNED)) FROM tw.Users;");
+        $sth->execute();
+        $sth->bind_result($value);
+        while ($sth->fetch())
+        {
+        }
+        if ($value==0) $value=1000000;
+        else $value = (int)$value + 1 ;
+        $nr_matricol = "S" . (string)$value;
+        $sth = $this->db->GetConn()->prepare("INSERT INTO tw.Users(nr_matricol,username,password,first_name,last_name,github_account,facebook_account,gender,user_type) VALUES (?,?,?,?,?,?,?,?,?)");
+        $sth->bind_param("sssssssss",$nr_matricol, $username, $password, $firstname, $lastname,$githubAccount,$facebookAccount,$gender,$user_type);
         return $sth->execute();
     }
 
@@ -78,8 +90,8 @@ class User_Services extends Services
         /*
         */
         $sth = $this->db->GetConn()->prepare("UPDATE tw.users SET first_name = ?, last_name = ?, github_account = ?, facebook_account = ?, password = ? WHERE id = ?");
-        if($password !== "") 
-        { 
+        if($password !== "")
+        {
             $password = md5($password);
             $sth->bind_param("sssssi",$firstName, $lastName,$githubAccount,$facebookAccount, $password, $id);
         }
@@ -92,7 +104,7 @@ class User_Services extends Services
 
     public function retrieve_profile_info($id) /*Marius Cretu*/
     {
-        
+
         $sth = $this->db->GetConn()->prepare("SELECT first_name, last_name, github_account, facebook_account, password FROM tw.users WHERE id = ?");
         $sth->bind_param("i", $id);
         $sth->execute();
@@ -102,7 +114,7 @@ class User_Services extends Services
         $githubAccount = null;
         $facebookAccount = null;
         $password = null;
-        
+
         $sth->bind_result($firstName,$lastName,$githubAccount,$facebookAccount, $password);
         while ($sth->fetch())
         {
@@ -111,8 +123,106 @@ class User_Services extends Services
             return array($firstName,$lastName,$githubAccount,$facebookAccount, $password);
         return null;
     }
-	
-	public function retrieve_c_s($id) /*Marius Cretu*/
+
+    public function deleteAccount($mail)//only admin can see this
+    {
+        return 'UNIMPLEMENTED';
+    }
+
+    private function GetNrMatricol($id)
+    {
+      $nr_matricol=null;
+      $sth = $this->db->GetConn()->prepare("SELECT nr_matricol FROM tw.users WHERE id = ?");
+      $sth->bind_param("s", $id);
+      $sth->bind_result($nr_matricol);
+      $sth->execute();
+      while ($sth->fetch())
+      {
+      }
+      return $nr_matricol;
+    }
+
+    private function ComputeCoursesAttendances($id)
+    {
+        $suma=0;
+        $nr =0;
+        $nr_matricol = $this->GetNrMatricol($id);
+        $sth = $this->db->GetConn()->prepare("SELECT valoare FROM tw.note WHERE (categorie = ?) AND (nr_matricol = ?)");
+        $categorie = "1";
+        $sth->bind_param("ss", $categorie , $nr_matricol);
+        $valoare=0;
+        $sth->bind_result($valoare);
+        $sth->execute();
+        while ($sth->fetch())
+        {
+            $suma = $suma + $valoare;
+            $nr= $nr +1;
+        }
+        return $nr/14;
+    }
+
+    private function ComputeLaboratoriesAttendances($id)
+    {
+        $suma=0;
+        $nr = 0;
+        $nr_matricol = $this->GetNrMatricol($id);
+        $sth = $this->db->GetConn()->prepare("SELECT valoare FROM tw.note WHERE (categorie = ?) AND (nr_matricol = ?)");
+        $categorie = "2";
+        $sth->bind_param("ss", $categorie , $nr_matricol);
+        $valoare=0;
+        $sth->bind_result($valoare);
+        $sth->execute();
+        while ($sth->fetch())
+        {
+            $suma = $suma + $valoare;
+            $nr = $nr + 1;
+        }
+        return $nr / 14;
+    }
+
+    private function ComputeProjectSituation($id)
+    {
+      $suma=0;
+      $nr_matricol = $this->GetNrMatricol($id);
+      $sth = $this->db->GetConn()->prepare("SELECT valoare FROM tw.note WHERE (categorie = ?) AND (nr_matricol = ?)");
+      $categorie = "3";
+      $sth->bind_param("ss", $categorie , $nr_matricol);
+      $valoare=0;
+      $sth->bind_result($valoare);
+      $sth->execute();
+      while ($sth->fetch())
+      {
+          $suma = $suma + $valoare;
+      }
+      return ($suma / 3) /10;
+    }
+
+    public function getevents()
+    {
+        $eveniment=null;
+        $eveniment_array= array();
+        $sth = $this->db->GetConn()->prepare("SELECT eveniment FROM tw.evenimente");
+        $sth->bind_result($eveniment);
+        $sth->execute();
+        while ($sth->fetch())
+        {
+            array_push($eveniment_array,$eveniment);
+        }
+        return $eveniment_array;
+    }
+
+
+    public function computechanches($id)
+    {
+        $courses_attendances=$this->ComputeCoursesAttendances($id);
+        $laboratories_attendances = $this->ComputeLaboratoriesAttendances($id);
+        $web_events = 1/2;
+        $project_situation = $this->ComputeProjectSituation($id);
+        $promovability_chance = ($courses_attendances+$laboratories_attendances+$web_events+$project_situation)/4;
+        return array($courses_attendances,$laboratories_attendances,$web_events,$project_situation,$promovability_chance);
+    }
+
+    public function retrieve_c_s($id) /*Marius Cretu*/
     {
         $rows = array();
         /*array to store the info that we want to retrieve*/
@@ -155,37 +265,103 @@ class User_Services extends Services
         while($sth->fetch()){
             array_push($rows, $desc, $asc, $dt);
         }
-        
+
         /*retrieve the description, associated links and the date*/
 
         if ($rows !== null) //all good
             return $rows;
         return null;
     }
+    public function retrieve_note($id) /*Marius Cretu*/
+        {
+            $rows = array();
 
-    public function deleteAccount($mail)//only admin can see this
-    {
-        return 'UNIMPLEMENTED';
-    }
-    //    function xhrInsert()
-    //    {
-    //        $text = $_POST['text'];
-    //
-    //        $sth = $this->db->prepare('INSERT INTO DATA(TEXT) VALUES (:text)');
-    //        $sth->execute(array(':text' => $_POST['text']));
-    //
-    //
-    //        $data = array('text' => $text, 'id' => $this->db->lastInsertId());
-    //        echo json_encode($data);
-    //    }
-    //
-    //    function xhrGetListings()
-    //    {
-    //        $sth = $this->db->prepare("SELECT * FROM DATA");
-    //        $sth->setFetchMode(PDO::FETCH_ASSOC);
-    //        $sth->execute();
-    //        $data = $sth->fetchAll();
-    //
-    //        echo json_encode($data);
-    //    }
+
+            $sth = $this->db->GetConn()->prepare("SELECT s.nume, s.prenume, t.denumire, ev.valoare, ev.saptamana
+            from studenti s
+            join ev_note ev on s.nr_matricol = ev.nr_matricol
+                    join types t on t.id = ev.categorie
+            where id_prof = ? and updated_at < SYSDATE() and ev_type = 'add_nota'
+            order by updated_at desc limit 2;");
+            $sth->bind_param("i", $id);
+            $sth->execute();
+
+
+            $nume = null;
+            $prenume = null;
+            $cat = null;
+            $val = null;
+            $week = null;
+
+            $sth->bind_result($nume, $prenume, $cat, $val, $week);
+            while($sth->fetch()){
+                array_push($rows, $nume, $prenume, $cat, $val, $week);
+            }
+
+            $sth = $this->db->GetConn()->prepare("SELECT s.nume, s.prenume, t.denumire, ev.saptamana
+            from studenti s
+            join ev_note ev on s.nr_matricol = ev.nr_matricol
+                    join types t on t.id = ev.categorie
+            where id_prof = ? and updated_at < SYSDATE() and ev_type = 'prez' and t.denumire = 'laborator'
+            order by updated_at desc limit 3;");
+            $sth->bind_param("i", $id);
+            $sth->execute();
+
+
+            $nume = null;
+            $prenume = null;
+            $cat = null;
+            $week = null;
+
+            $sth->bind_result($nume, $prenume, $cat, $week);
+            while($sth->fetch()){
+                array_push($rows, $nume, $prenume, $cat, $week);
+            }
+
+            $sth = $this->db->GetConn()->prepare("SELECT s.nume, s.prenume, t.denumire, ev.valoare, ev.saptamana
+            from studenti s
+            join ev_note ev on s.nr_matricol = ev.nr_matricol
+                    join types t on t.id = ev.categorie
+            where id_prof = ? and updated_at < SYSDATE() and ev_type = 'bonus'
+            order by updated_at desc limit 1;");
+            $sth->bind_param("i", $id);
+            $sth->execute();
+
+
+            $nume = null;
+            $prenume = null;
+            $val = null;
+            $cat = null;
+            $week = null;
+
+            $sth->bind_result($nume, $prenume, $val, $cat, $week);
+            while($sth->fetch()){
+                array_push($rows, $nume, $prenume, $val, $cat, $week);
+            }
+
+
+             $sth = $this->db->GetConn()->prepare("SELECT s.nume, s.prenume, t.denumire, ev.saptamana
+            from studenti s
+            join ev_note ev on s.nr_matricol = ev.nr_matricol
+                    join types t on t.id = ev.categorie
+            where id_prof = ? and updated_at < SYSDATE() and ev_type = 'prez' and t.denumire = 'curs'
+            order by updated_at desc limit 2;");
+            $sth->bind_param("i", $id);
+            $sth->execute();
+
+
+            $nume = null;
+            $prenume = null;
+            $cat = null;
+            $week = null;
+
+            $sth->bind_result($nume, $prenume, $cat, $week);
+            while($sth->fetch()){
+                array_push($rows, $nume, $prenume, $cat, $week);
+            }
+
+            if ($rows !== null) //all good
+                return $rows;
+            return null;
+        }
 }
