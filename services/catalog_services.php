@@ -213,7 +213,6 @@ class catalog_services extends Services
 		$id = (int)$id+1;
 		foreach($arr as $item){
 			$line = preg_split('/,/',$item);
-			echo var_dump($line);
 			$id = (int)$id+1;
 			$id = (string)$id;
 			if($destination == 'curs'){

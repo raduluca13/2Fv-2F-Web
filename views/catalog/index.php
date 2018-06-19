@@ -54,7 +54,6 @@ function showRanking(category,type){
     document.getElementById('a_insert_e').style.display = "inline-block";
     document.getElementById('search_input_e').style.display ="block";
     document.getElementById('a_show_e').style.display = "none";
-    return;
   }
 
   var tabel = document.getElementById('ul_su_'+category);
@@ -87,6 +86,7 @@ function showRanking(category,type){
     tabel.setAttribute("border", "2");
     ajax.get('/api/catalog', {}, function (results){
       let resultParsed = JSON.parse(results);
+      console.log(resultParsed);
       resultParsed["prezente_curs"].forEach(populatePrezenteCurs);
       resultParsed=[];
     });
@@ -106,6 +106,7 @@ function showRanking(category,type){
       });
     }
   }
+  
   function populatePrezenteCurs(element, index, arr){
     // var tblBody = document.getElementById("ul_su_curs").getElementsByTagName('tbody');
     var row = tblBody.insertRow(index);//table.bdoy.length
@@ -113,7 +114,10 @@ function showRanking(category,type){
     cell.innerHTML = element[0];
     for (let i=1; i<14; i++){
       this['cell'+i] = row.insertCell(i);
-      if (element[1]==i){
+      this['cell'+i].setAttribute('id', 'cell'+i);
+      this['cell'+i].setAttribute('contenteditable', true);
+      // this['cell'+i].setAttribute('onChange', tdChangesHandler);
+      if (element[3]==i){
         this['cell'+i].innerHTML = 1;
       }else{
         this['cell'+i].innerHTML = '-';
@@ -148,7 +152,48 @@ function showRanking(category,type){
       }
     }
   }
-}
+  // -------------- VERIFICARE UPDATE TD -----------------
+  var insertedNodes = [];
+  var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+
+        // if(mutation.type === 'childList'){
+        //   var list_values = [].slice.call()
+        // }
+        for (var i = 0; i < mutation.addedNodes.length; i++){
+          // console.log(mutation.addedNodes[i]);
+          insertedNodes.push(mutation.addedNodes[i]);
+        }
+      })
+    });
+    var observerConfig = {
+      attributes: true,
+      childList: true,  //true for textContent,
+      // attributeOldValue: true,
+      characterData: false //false for textContent
+    }
+    
+    tblBody.setAttribute('id','tblbd');
+    var tableRows = document.querySelectorAll('#tblbd');
+    var trs = tableRows[0].children;
+    var arr = [].slice.call(trs);
+    console.log(arr);
+      // for (let i = 0; i < trs.length; i++){
+      //   var node = trs[i];
+      //   console.log(node);
+
+      //   observer.observe(node, observerConfig);
+      //   // console.log(insertedNodes);
+      // }   
+    // observer.observe(document, { childList: true });
+    // console.log(insertedNodes);
+    
+    
+
+} // end showRanking
+
+
 function hide(category){
   if(category === 'curs'){
     document.getElementById('a_hide_c').style.display = "none";
