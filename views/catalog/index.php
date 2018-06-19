@@ -115,6 +115,7 @@ function showRanking(category,type){
     for (let i=1; i<14; i++){
       this['cell'+i] = row.insertCell(i);
       this['cell'+i].setAttribute('id', 'cell'+i);
+      this['cell'+i].setAttribute('class', 'tableCell');
       this['cell'+i].setAttribute('contenteditable', true);
       // this['cell'+i].setAttribute('onChange', tdChangesHandler);
       if (element[3]==i){
@@ -171,14 +172,21 @@ function showRanking(category,type){
       attributes: true,
       childList: true,  //true for textContent,
       // attributeOldValue: true,
+      subtree: true,
       characterData: false //false for textContent
     }
     
     tblBody.setAttribute('id','tblbd');
-    var tableRows = document.querySelectorAll('#tblbd');
-    var trs = tableRows[0].children;
-    var arr = [].slice.call(trs);
-    console.log(arr);
+    // var tableRows = document.querySelectorAll('#tblbd');
+    // var trs = tableRows[0].children;
+    var tableRows = document.getElementById('tblbd');
+    var nodeListTrs = document.querySelectorAll('tblbd');
+    console.log(nodeListTrs);
+    // var collectionCells = document.getElementsByClassName('tableCell'); 
+    
+    // var arr = Array.from(trs);
+    // console.log(collectionCells);
+
       // for (let i = 0; i < trs.length; i++){
       //   var node = trs[i];
       //   console.log(node);
@@ -487,7 +495,7 @@ window.onload = function(){
         </div>
         <div>
           <label for="sapt">Saptamana*</label>
-          <input type="number" name="sapt" id="saptamana" onblur="onBlur();">
+          <input type="number" name="sapt" min="1" step="1" id="saptamana" onblur="onBlur();">
           <span id="saptamana_error">Alegeti saptamana in care a fost pusa prezenta.</span>
         </div>
         <div class="actions">
@@ -527,7 +535,7 @@ window.onload = function(){
         </div>
         <div>
           <label for="nota">Nota</label>
-          <input type="number" name="github" id="nota" onblur="onBlur();">
+          <input type="number" name="github" id="nota" min="1" max="10" step="1" onblur="onBlur();">
           <span id="nota_error">Nota este obligatorie</span>
         </div>
         <div>
@@ -537,7 +545,7 @@ window.onload = function(){
         </div>
         <div>
           <label for="saptamana">Saptamana*</label>
-          <input type="number" name="saptamana" id="saptamana" onblur="onBlur();">
+          <input type="number" name="saptamana" id="saptamana" min="1" step="1" max="13" onblur="onBlur();">
           <span id="saptamana_error">Alegeti saptamana in care a fost pusa nota.</span>
         </div>
 
