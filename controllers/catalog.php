@@ -8,12 +8,12 @@ class Catalog extends Controller{
       if($this->user_type=='stud')
       {
         $this->view->css = array('catalog/css/reset.css','catalog/css/styles.css','catalog/css/catalog.css');
-        $this->view->js = array('public/js/utils.js','catalog/js/catalog.js','login/js/login.js');
+        $this->view->js = array('public/js/utils.js',/*'catalog/js/catalog.js','login/js/login.js'*/);
       }
       else if($this->user_type=='prof' || $this->user_type=='admin')
       {
         $this->view->css = array('catalog/css/reset.css','catalog/css/styles.css','catalog/css/catalog.css');
-        $this->view->js = array('public/js/utils.js','login/js/login.js','catalog/js/catalog.js');
+        $this->view->js = array('public/js/utils.js'/*,'login/js/login.js','catalog/js/catalog.js'*/);
       }
     }
 	}
@@ -27,7 +27,7 @@ class Catalog extends Controller{
       if($this->user_type=='stud'){
         $this->view->render('catalog/stud');
       }else if($this->user_type=='prof' || $this->user_type=='admin'){
-          $this->view->render('catalog/index');
+        $this->view->render('catalog/index');
       }
     }
       

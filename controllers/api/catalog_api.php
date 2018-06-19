@@ -15,33 +15,35 @@ class catalog_api {
         } 
 	}
 
-	function post()
-    {
-        if($_POST['cat']=='prezenta'){
-            if (!Utils::requiredArguments('POST', array('cat','nr_matricol','saptamana'))){
+	function post() {
+        if($_POST['cat']=='curs'){
+            if (!Utils::requiredArguments('POST', array('cat','nr_matricol','data_notare','id_prof','saptamana'))){
                 return;
             }
             else{
-                $nr_matricol=$_POST['nr_matricol'];
-                $saptamana = $_POST['saptamana'];
+                $nr_matricol = $_POST['nr_matricol'];
                 
-                echo json_encode($this->catalogService->insertPrezentaCurs($nr_matricol, $saptamana));
+                $date = strtotime($_POST['data_notare']);
+                $data_notare = date('Y-m-d', $date);
+
+                $data_notare = $_POST['data_notare'];
+                $id_prof = $_POST['id_prof'];
+                $week = $_POST['saptamana'];
+                echo json_encode($this->catalogService->insertPrezentaCurs($nr_matricol, $data_notare, $id_prof, $week));
             }
-        }
-        if($_POST['cat']=='nota'){
+        }else if($_POST['cat']=='lab'){
             if (!Utils::requiredArguments('POST', array('cat','nr_matricol','nota','data_notare','saptamana'))){
                 return;
             }
             else {
                 $nr_matricol = $_POST['nr_matricol'];
                 $nota = $_POST['nota'];
-                $data_notare = $_POST['data_notare'];
+                $data_notare = date('Y-m-d', strtotime($_POST['data_notare']));
                 $saptamana = $_POST['saptamana'];
             
-                echo json_encode($this->catalogService->insertNotaLab($nr_matricol, $nota, $saptamana));
+                echo json_encode($this->catalogService->insertNotaLab($nr_matricol, $nota, $data_notare, $saptamana));
             }
-        }
-        if($_POST['cat']=='eveniment'){
+        }else if($_POST['cat']=='eveniment'){
             if (!Utils::requiredArguments('POST', array('cat','title','descriere'))){
                 return;
             }
@@ -51,13 +53,19 @@ class catalog_api {
         
                 echo json_encode($this->catalogService->insertEveniment($title, $descriere));
             }
-        }
-        
-        
-
-        
-
-        
+        }else if($_POST['cat']=='file'){
+            if($_POST['csvDestination']=='curs'){
+                // $x = base64_decode($_POST["data"]);
+                // $x = rawurldecode ($_POST["data"]);
+                $records = utf8_decode($_POST["data"]);
+                // if($this->catalogService->insertPrezenteCSV($records,'curs')==)
+                echo json_encode($this->catalogService->insertPrezenteCSV($records, 'curs'));
+            }
+            else if($_POST['csvDestination']=='lab'){
+                $records = utf8_decode($_POST["data"]);
+                echo json_encode($this->catalogService->insertPrezenteCSV($records, 'lab'));
+            }          
+        }           
     }
     function delete()
     {

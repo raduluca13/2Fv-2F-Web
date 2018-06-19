@@ -1,32 +1,43 @@
 <script src="/login/js/login.js" type="text/javascript"></script>
 <!-- <script src="/catalog/js/util.js" type="text/javascript"></script> -->
 <script>
-function loginOnLoad(){
-    var formCondEmail = new FormularConditionObject('nr_matricol_error', function ()
-    {
-        /*var re = /^(([A-Z]{2}+[0-9]{2}+[A-Z]{9}))/;
-        return re.test(String(getElementTextByID('nr_matricol')).toLowerCase());*/
+var formConds = [];
 
-        var re = /^[a-zA-Z]{2}/;
-        return re.test(String(getElementTextByID('nr_matricol')));
-    });
+function loadChecker(){
+  var conditionNrMat = new FormularConditionObject('nr_matricol_error', function () {
+  /*var re = /^(([A-Z]{2}+[0-9]{2}+[A-Z]{9}))/;
+  return re.test(String(getElementTextByID('nr_matricol')).toLowerCase());*/
+    var re = /^([a-zA-Z]{2}[0-9]{11})/;
+    return re.test(String(getElementTextByID('nr_matricol')));
+  });
 
 
-     var formCondEmail2 = new FormularConditionObject('saptamana_error', function ()
-    {
-        var re = /^([0-9]+)/;
-        return re.test(String(getElementTextByID('saptamana')).toLowerCase());
-    });
-    formConds.push(formCondEmail);
-    formConds.push(formCondEmail2);
-    activateErrorElemets(formConds);
+  var conditionSaptamana = new FormularConditionObject('saptamana_error', function () {
+    var re = /^([0-9]+)/;
+    return re.test(String(getElementTextByID('saptamana')).toLowerCase());
+  });
+
+  // var conditionDate = new FormularConditionObject('data_notare_error', function (){
+  //   var re = /^(\d{1,2})-(\d{1,2})-(\d{4})/;
+  //   var data = document.getElementByID('data_notare').value;
+  //   return re.test(String(data));
+  // });
+
+  formConds.push(conditionNrMat);
+  formConds.push(conditionSaptamana);
+  // formConds.push(conditionDate);
+  activateErrorElemets(formConds);
 }
-addLoadEvent(loginOnLoad);
+addLoadEvent(loadChecker);
 
+function onBlur() {
+  activateErrorElemets(formConds);
+}
 function showRanking(category,type){
   if(category === 'curs'){
     document.getElementById('a_hide_c').style.display = "inline-block";
     document.getElementById('a_insert_c').style.display = "inline-block";
+    document.getElementById('csvFileLabelId').style.display = "inline-block";
     document.getElementById('search_input_c').style.display = "block";
 
     document.getElementById('a_show_c').style.display = "none";
@@ -34,6 +45,7 @@ function showRanking(category,type){
   if(category === 'lab'){
     document.getElementById('a_hide_l').style.display = "inline-block";
     document.getElementById('a_insert_l').style.display = "inline-block";
+    document.getElementById('csvFileLabelIdL').style.display = "inline-block";
     document.getElementById('search_input_l').style.display = "block";
     document.getElementById('a_show_l').style.display = "none";
   }
@@ -142,6 +154,9 @@ function hide(category){
     document.getElementById('a_hide_c').style.display = "none";
     document.getElementById('a_insert_c').style.display = "none";
     document.getElementById('search_input_c').style.display = "none";
+    document.getElementById('csvFileId').style.display = "none";
+    document.getElementById('csvFileLabelId').style.display = "none";
+
     document.getElementById('ul_su_'+category).innerHTML = '';
     document.getElementById('ul_su_'+category).style.display = "none";
     document.getElementById('a_show_c').style.display = "block";
@@ -163,7 +178,6 @@ function hide(category){
     document.getElementById('a_show_e').style.display = "block";
   }
 }
-
 function insertPrezentaCurs(){
   document.getElementById('sec1').style.display = "none";
   document.getElementById('sec2').style.display = "none";
@@ -188,37 +202,41 @@ function insertEveniment(){
   document.getElementById('sec2_1').style.display = "none";
   document.getElementById('sec1_1').style.display = "none";
 }
-
 function verificareInsertCurs(){
+  if (!activateErrorElemets(formConds)){return;}
+  let id_prof = cookieGetLoggedUserID();
   ajax.post('api/catalog', {
-    cat: 'prezenta',
-    nr_matricol: getElementTextByID('nr_matricol'),
-    saptamana: getElementTextByID('saptamana'),
+    cat: 'curs',
+    nr_matricol: document.getElementById('nr_matricol').value,
+    data_notare: document.getElementById('data_n').value,
+    saptamana: document.getElementById('saptamana').value,
+    id_prof: cookieGetLoggedUserID() // = id_prof;
     }, function (text){
+      console.log(text);
       if (text === 'true')  {
-        setElementVisible('register_success');
+        setElementVisible('prezentaInsertSuccess');
         // sleep(2500).then(() => {
         // window.location.replace("/catalog");
         // })
         setTimeout(function(){
           window.location.replace("/catalog");
-        },2500);
+        },200000);
       }
       else {
-        setElementVisible('register_failure');
+        setElementVisible('prezentaInsertFail');
         // sleep(2500).then(() => {
         // window.location.replace("/catalog");
         // })
         setTimeout(function(){
           window.location.replace("/catalog");
-        },2500);
+        },200000);
       }
 
     });
 }
 function verificareInsertNota(){
   ajax.post('api/catalog', {
-    cat: 'nota',
+    cat: 'lab',
     nr_matricol: getElementTextByID('nr_matricol'),
     nota: getElementTextByID('nota'),
     data: getElementTextByID('data_notare'),
@@ -226,7 +244,7 @@ function verificareInsertNota(){
     }, function (text){
 
       if (text === 'true')  {
-        setElementVisible('register_success');
+        setElementVisible('notaInsertSuccess');
         // sleep(2500).then(() => {
         // window.location.replace("/catalog");
         // })
@@ -235,7 +253,7 @@ function verificareInsertNota(){
         },5000);
       }
       else {
-        setElementVisible('register_failure');
+        setElementVisible('notaInsertFail');
         // sleep(2500).then(() => {
         // window.location.replace("/catalog");
         // })
@@ -253,7 +271,7 @@ function verificareInsertEveniment(){
     descriere: getElementTextByID('descriere'),
     }, function (text){
       if (text === 'true')  {
-      setElementVisible('register_success');
+      setElementVisible('eventInsertSucces');
       sleep(5000).then(() => {
       window.location.replace("/catalog");
       })
@@ -262,7 +280,7 @@ function verificareInsertEveniment(){
     //   },5000);
     }
     else {
-      setElementVisible('register_failure');
+      setElementVisible('eventInsertFail');
       // sleep(2500).then(() => {
       // window.location.replace("/catalog");
       // })
@@ -273,8 +291,97 @@ function verificareInsertEveniment(){
 
     });
 }
+  
+  // inputElement.addEventListener("change", handleFiles, false); 
+  // ---------- VARIANTA ----------------
+  
+  // fileA.addEventListener("click", function (e) {
+  //   if (fileCSV) {
+  //     fileCSV.click();
+  //   }
+  //   e.preventDefault(); // prevent navigation to "#"
+  // }, false);
+  // ---------------END VARIANTA ----------------
+  
+  // var importCsv = function(){}
+window.onload = function(){
+  var fileCSV = document.getElementById("csvFileId");
+
+  var fileCSV2 = document.getElementById("csvFileIdLab");
 
 
+  fileCSV.addEventListener('change', function(e) {
+    var file = fileCSV.files[0];
+    var textType = /application\/vnd.ms-excel/;
+    // text/plain
+    // text/x-csv
+
+    if (file.type.match(textType)) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        // let data = reader.result
+        ajax.post('api/catalog', {
+          cat: 'file',
+          csvDestination: 'curs',
+          data: reader.result
+        }, function(response){
+          console.log(response);
+        });
+      }
+      // reader.readAsArrayBuffer(file);
+      // reader.readAsDataURL(file);
+      var text = reader.readAsText(file,'UTF-8');
+      // var data = reader.readAsDataURL(file);
+      // var rawData = reader.readAsBinaryString(file);
+    } else {
+      console.log('bad file');
+    }
+  });
+
+  fileCSV2.addEventListener('change', function(e) {
+    var file = fileCSV2.files[0];
+    var textType = /application\/vnd.ms-excel/;
+
+    if (file.type.match(textType)) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        ajax.post('api/catalog', {
+          cat: 'file',
+          csvDestination: 'lab', 
+          data: reader.result
+        }, function(response){
+          console.log(response);
+        });
+      }
+      var text = reader.readAsText(file,'UTF-8');
+    } else {
+      console.log('bad file');
+    }
+  });
+}
+  
+
+  // function handleFiles(files){
+  //   var fileInput = document.getElementById("csvFileId");
+  //   var filess = fileInput.files;  
+  //   var fileC = filess[0]; //iterate if more / file = files.item(i);
+
+  //   var formData=new FormData();
+  //   console.log(fileC);
+  //   formData.append("file",fileC);
+  //   console.log(formData);
+  //   ajax.fileUpload('api/catalog', "POST", {
+  //     cat: 'file',
+  //     file: formData
+  //   }, function (response){
+  //     console.log(response);
+  //   })
+  // }
+
+  // document.querySelector("#csvFileId").onchange = importCsv;
+  
 </script>
 <header>
 	<h1 class="title">My WEB way!</h1>
@@ -305,31 +412,39 @@ function verificareInsertEveniment(){
     	<input type="text" id="search_input_c" onkeyup="myFunction()" placeholder="Search for names..">
    		<a id="a_hide_c" class="info-link" href="#" onclick="hide('curs');">Hide</a>
       <a id="a_insert_c" class="info-link" href="#" onclick="insertPrezentaCurs();">Adaugati o prezenta</a>
-
+      
+      <label id="csvFileLabelId" for="csvFileId">Adauga prezente din fisier CSV
+        <input name="csvFileId" id="csvFileId" type="file" style="display:none">
+         <!-- onchange="handleFiles(this.files)" -->
+      </label>
+      <!-- <a href="#" id="a_csv_c" onclick="importCsv();">Adauga prezente din fisier CSV</a>  -->
   	</section>
 
     <section id="sec1_1" class="bigtitle">
       <h1 style="text-align:center">Inserare prezenta curs</h1>
       <form class="register" action="#" method="post">
 
-        <span id="register_success"">Prezenta inserata cu succes.</span>
-        <span id="register_failure"">Prezenta nu a putut fi inserata.</span>
+        <span id="prezentaInsertSuccess">Prezenta inserata cu succes.</span>
+        <span id="prezentaInsertFail">Prezenta nu a putut fi inserata.</span>
         <script>
-          setElementInvisible('register_success')
-          setElementInvisible('register_failure')
+          setElementInvisible('prezentaInsertSuccess');
+          setElementInvisible('prezentaInsertFail');
         </script>
         <div>
-          <label for="nr_matricol">Nr_matricol*</label>
-          <input type="text" name="nr_matricol" id="nr_matricol">
-          <span id="nr_matricol_error" onblur="onBlur();">Nr matricol nu este valid</span>
+          <label for="nr_mat">Nr_matricol*</label>
+          <input type="text" name="nr_mat" id="nr_matricol" onblur="onBlur();">
+          <span id="nr_matricol_error" >Nr matricol nu este valid</span>
         </div>
-
         <div>
-          <label for="saptamana">Saptamana*</label>
-          <input type="number" name="saptamana" id="saptamana">
-          <span id="saptamana_error"  onblur="onBlur();">Alegeti saptamana in care a fost pusa nota.</span>
+          <label for="data_notare">Data Notare*</label>
+          <input type="date" name="data_notare" id="data_n">
+          <!-- <span id="data_notare_error"  onblur="onBlur();">Selectati data prezentei.</span> -->
         </div>
-
+        <div>
+          <label for="sapt">Saptamana*</label>
+          <input type="number" name="sapt" id="saptamana" onblur="onBlur();">
+          <span id="saptamana_error">Alegeti saptamana in care a fost pusa prezenta.</span>
+        </div>
         <div class="actions">
           <button type="button" onclick="verificareInsertCurs();">INSERARE PREZENTA</button>
         </div>
@@ -345,16 +460,20 @@ function verificareInsertEveniment(){
     	<input type="text" id="search_input_l" onkeyup="myFunction();" placeholder="Search for names..">
     	<a id="a_hide_l" class="info-link" href="#" onclick="hide('lab');">Hide</a>
       <a id="a_insert_l" class="info-link" href="#" onclick="insertNotaLab();">Adaugati o nota</a>
+      <label id="csvFileLabelIdL" for="csvFileIdLab">Adauga prezente din fisier CSV
+        <input name="csvFileIdLab" id="csvFileIdLab" type="file" style="display:none">
+         <!-- onchange="handleFiles(this.files)" -->
+      </label>
   	</section>
 
     <section id="sec2_1" class="bigtitle">
       <h1 style="text-align:center">Inserare nota laborator</h1>
       <form class="register" action="#" method="post">
-        <span id="notaInserata">Nota inserata cu succes.</span>
-        <span id="notaInserataFail">Nota nu a putut fi inserata.</span>
+        <span id="notaInsertSuccess">Nota inserata cu succes.</span>
+        <span id="notaInsertFail">Nota nu a putut fi inserata.</span>
         <script>
-          setElementInvisible('notaInserata');
-          setElementInvisible('notaInserataFail');
+          setElementInvisible('notaInsertSuccess');
+          setElementInvisible('notaInsertFail');
         </script>
         <div>
           <label for="nr_matricol">Nr_matricol*</label>
@@ -398,11 +517,11 @@ function verificareInsertEveniment(){
   <section id="sec3_1" class="bigtitle">
       <h1 style="text-align:center">Adaugare eveniment nou</h1>
       <form class="register" action="#" method="post">
-        <span id="register_success">Eveniment adaugat cu succes.</span>
-        <span id="register_failure">Nota nu a putut fi inserata.</span>
+        <span id="eventInsertSucces">Eveniment adaugat cu succes.</span>
+        <span id="eventInsertFail">Nota nu a putut fi inserata.</span>
         <script>
-          setElementInvisible('register_success')
-          setElementInvisible('register_failure')
+          setElementInvisible('eventInsertSucces')
+          setElementInvisible('eventInsertFail')
         </script>
         <div>
 

@@ -175,13 +175,36 @@ ajax.send = function (url, callback, method, data, async)
             callback(x.responseText)
         }
     };
-    if (method === 'POST')
-    {
+    if (method === 'POST'){
         x.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     }
     x.send(data)
 };
-
+ajax.fileUpload = function(url, method, data, callback, async){
+    if (async === undefined) {
+        async = true;
+    }
+    // var x = ajax.x();
+    var x = new XMLHttpRequest;
+    
+    x.open(method, url, async);
+    x.onreadystatechange = function () {
+        if (x.readyState === 4) {
+            callback(x.responseText)
+        }
+    };
+    if (method === 'POST'){
+        /* 
+        * The value of the boundary doesn't matter as long as no other structure in 
+        * the request contains such a sequence of characters. We chose, nevertheless, 
+        * a pseudo-random value based on the current timestamp of the browser. 
+        */
+        var boundary = "AJAX--------------" + (new Date()).getTime();
+        var contentType = "multipart/form-data; boundary=" + boundary;
+        x.setRequestHeader("Content-Type", contentType);
+    }
+    x.send(data);
+}
 ajax.get = function (url, data, callback, async)
 {
     var query = [];
