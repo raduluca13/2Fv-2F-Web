@@ -1,7 +1,5 @@
-<link rel="stylesheet" type="text/css" href="/catalog/css/catalog.css"></script>
 <script>
 function showRanking(category,type){
-  // console.log(category);
   if(category === 'curs'){
     document.getElementById('a_hide_c').style.display = "inline-block";
     document.getElementById('a_show_c').style.display = "none";
@@ -115,24 +113,18 @@ function showRanking(category,type){
 function hide(category){
   if(category === 'curs'){
     document.getElementById('a_hide_c').style.display = "none";
-    document.getElementById('a_insert_c').style.display = "none";
-    document.getElementById('search_input_c').style.display = "none";
     document.getElementById('ul_su_'+category).innerHTML = '';
     document.getElementById('ul_su_'+category).style.display = "none";
     document.getElementById('a_show_c').style.display = "block";
   }
   if(category === 'lab'){
     document.getElementById('a_hide_l').style.display = "none";
-    document.getElementById('a_insert_l').style.display = "none";
-    document.getElementById('search_input_l').style.display = "none";
     document.getElementById('ul_su_'+category).innerHTML = '';
     document.getElementById('ul_su_'+category).style.display = "none";
     document.getElementById('a_show_l').style.display = "block";
   }
   if(category === 'ev'){
     document.getElementById('a_hide_e').style.display = "none";
-    document.getElementById('a_insert_e').style.display = "none";
-    document.getElementById('search_input_e').style.display = "none";
     document.getElementById('ul_su_'+category).innerHTML = '';
     document.getElementById('ul_su_'+category).style.display = "none";
     document.getElementById('a_show_e').style.display = "block";
@@ -145,9 +137,15 @@ function hide(category){
 	<nav>
 		<ul id="nav_ul">
       <li id="home_li" class="nav_item"><a id="a_frontpage" href="/home">Home</a></li>
-      <li id="catalog_li" class="nav_item"><a id="a_catalog" href="/catalog">Rankings</a></li>
       <li id="sugestii_li" class="nav_item"><a id="a_sugestii" href="/sugestii">Suggestions</a></li>
-      <li id="ddn" class="nav_item"><a id="logout" href="javascript:logout();">Logout</a>	</li>
+      <li id="catalog_li" class="nav_item"><a id="a_catalog" href="/catalog">Rankings</a></li>
+      <li id="profile" class="nav_item"><a id="a_profile" href="/profile">Profile</a>
+        <li id="ddn" class="nav_item"><a id="logout" href="javascript:logout();">Logout</a>
+			<!--ul id="dropdown"-->
+				<!--li id="myprofile_li"><a id="a_myprofile" href="myprofile.html">Detalii</a></li-->
+				<!--li id="logout_li"><a id="a_logout" href="logout.html">Logout</a></li-->
+			<!--/ul-->
+			</li>
 		</ul>
 	</nav>
 </header>

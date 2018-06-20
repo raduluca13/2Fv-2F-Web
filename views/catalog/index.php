@@ -2,37 +2,124 @@
 <!-- <script src="/catalog/js/util.js" type="text/javascript"></script> -->
 <script>
 var formConds = [];
+var editedFields = [];
+var editableFields = [];
+var listedStudentsCurs = document.createElement("div");
+listedStudentsCurs.setAttribute('id','lista_studenti');
+listedStudentsCurs.style.display = 'none';
+console.log(listedStudentsCurs);
+var listedStudentsLab = [];
 
-function loadChecker(){
-  var conditionNrMat = new FormularConditionObject('nr_matricol_error', function () {
-  /*var re = /^(([A-Z]{2}+[0-9]{2}+[A-Z]{9}))/;
-  return re.test(String(getElementTextByID('nr_matricol')).toLowerCase());*/
-    var re = /^([a-zA-Z]{2}[0-9]{11})/;
-    return re.test(String(getElementTextByID('nr_matricol')));
-  });
+var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+var observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation,index,list){
+      var entry = {
+        mutation: mutation,
+        el: mutation.target,
+        value: mutation.target.textContent,
+        oldValue: mutation.oldValue
+      };
+      // console.log("Recording mutation:", entry);
 
+      if (mutation.type == 'childList') {
+        // console.log('\n'+'A child node has been added or removed.');
+        // console.log('--childList TARGET---',mutation.target);
+      }
+      else if (mutation.type == 'attributes') {
+        // console.log('\n'+'The ' + mutation.attributeName + ' attribute was modified.');
+        // console.log('--------attr TARGET-----', mutation.target.textContent);
+        // console.log('--------oldValue-------', mutation.oldValue);
+      }
+      else if (mutation.type == 'characterData'){
+        // console.log(mutation);
+        // console.log('characterData.rework');
+      }
+    })
+});
+var observerConfig = {
+  attributes: true,
+  childList: true,  //true for textContent,
+  attributeOldValue: true,
+  subtree: true,
+  characterData: false //false for textContent
+}
 
-  var conditionSaptamana = new FormularConditionObject('saptamana_error', function () {
-    var re = /^([0-9]+)/;
-    return re.test(String(getElementTextByID('saptamana')).toLowerCase());
-  });
+// observer.observe(document, observerConfig);
 
-  // var conditionDate = new FormularConditionObject('data_notare_error', function (){
-  //   var re = /^(\d{1,2})-(\d{1,2})-(\d{4})/;
-  //   var data = document.getElementByID('data_notare').value;
-  //   return re.test(String(data));
-  // });
-
-  formConds.push(conditionNrMat);
-  formConds.push(conditionSaptamana);
-  // formConds.push(conditionDate);
+function blurChecker(field){
+  if(field == 'nr_matricol'){
+    var conditionNrMat = new FormularConditionObject('nr_matricol_error', function () {
+      /*var re = /^(([A-Z]{2}+[0-9]{2}+[A-Z]{9}))/;
+      return re.test(String(getElementTextByID('nr_matricol')).toLowerCase());*/
+      var re = /^([S]{1}[0-9]{7})/;
+      return re.test(String(getElementTextByID('nr_matricol')));
+    });
+    formConds.push(conditionNrMat);
+  }
+  if(field == 'nr_matricolLab'){
+    var conditionNrMatL = new FormularConditionObject('nr_matricolLab_error', function () {
+      /*var re = /^(([A-Z]{2}+[0-9]{2}+[A-Z]{9}))/;
+      return re.test(String(getElementTextByID('nr_matricol')).toLowerCase());*/
+      var re = /^([S]{1}[0-9]{7})/;
+      return re.test(String(getElementTextByID('nr_matricolLab')));
+    });
+    formConds.push(conditionNrMatL);
+  }
+  
+  if(field == 'saptamana'){
+    var conditionSaptamana = new FormularConditionObject('saptamana_error', function () {
+      var re = /^([0-9])/;
+      return re.test(String(getElementTextByID('saptamana')).toLowerCase());
+    });
+    formConds.push(conditionSaptamana);
+  }
+  if(field == 'saptamanaLab'){
+    var conditionSaptamanaL = new FormularConditionObject('saptamanaLab_error', function () {
+      var re = /^([0-9])/;
+      return re.test(String(getElementTextByID('saptamanaLab')).toLowerCase());
+    });
+    formConds.push(conditionSaptamanaL);
+  }
+  if(field == 'data_notare'){
+    var conditionDate = new FormularConditionObject('data_notare_error', function (){
+      var re = /^(\d{4})-(\d{1,2})-(\d{1,2})/;
+      var data = document.getElementById('data_notare').value;
+      return re.test(String(data));
+    });
+    formConds.push(conditionDate);
+  }
+  if(field == 'data_notareLab'){
+    var conditionDateL = new FormularConditionObject('data_notareLab_error', function (){
+      var re = /^(\d{4})-(\d{1,2})-(\d{1,2})/;
+      var data = document.getElementById('data_notareLab').value;
+      return re.test(String(data));
+    });
+    formConds.push(conditionDateL);
+  }
+  if(field == 'nota'){
+    var conditionNota = new FormularConditionObject('nota_error', function(){
+      var re = /^(\d{1,2})/;
+      return re.test(String(getElementTextByID('nota')));
+    });
+    formConds.push(conditionNota);
+  }
+  // if(field == 'passkey'){
+  //   var conditionPasskey = new FormularConditionObject('passkey_error'), function(){
+  //     var re = /^(x[0-9]{2}xv)/;
+  //     return re.test(String(getElementTextByID('passkey')));
+  //   }
+  //   formConds.push(conditionPasskey);
+  // }
+  // if(field == 'eveniment'){
+  //   var conditionEveniment = new FormularConditionObject('eveniment_error'), function(){
+  //     var re = /^[a-zA-Z]*/;
+  //     return re.test(String(getElementTextByID('eveniment')));
+  //   }
+  //   formConds.push(conditionEveniment);
+  // }
   activateErrorElemets(formConds);
 }
-addLoadEvent(loadChecker);
 
-function onBlur() {
-  activateErrorElemets(formConds);
-}
 function showRanking(category,type){
   if(category === 'curs'){
     document.getElementById('a_hide_c').style.display = "inline-block";
@@ -73,6 +160,10 @@ function showRanking(category,type){
     td.appendChild(text);
     row.appendChild(td);
   }
+  // var td = document.createElement("td");
+  // let text = document.createTextNode("Total");
+  // td.appendChild(text);
+  // row.appendChild(td);
 
   tblHead.appendChild(row);
   tabel.appendChild(tblHead);
@@ -83,13 +174,13 @@ function showRanking(category,type){
   document.getElementById('ul_su_'+category).style.display="block";
   if(type=='prezente'){
     if(category=='curs'){
-    tabel.setAttribute("border", "2");
-    ajax.get('/api/catalog', {}, function (results){
-      let resultParsed = JSON.parse(results);
-      console.log(resultParsed);
-      resultParsed["prezente_curs"].forEach(populatePrezenteCurs);
-      resultParsed=[];
-    });
+      // tabel.setAttribute("border", "2");
+      ajax.get('/api/catalog', {}, function (results){
+        let resultParsed = JSON.parse(results);
+        console.log(resultParsed);
+        resultParsed["prezente_curs"].forEach(populatePrezenteCurs);
+        resultParsed=[];
+      });
     }else if(category=='lab'){
       ajax.get('/api/catalog', {}, function(results){
         let resultParsed = JSON.parse(results);
@@ -111,25 +202,42 @@ function showRanking(category,type){
     // var tblBody = document.getElementById("ul_su_curs").getElementsByTagName('tbody');
     var row = tblBody.insertRow(index);//table.bdoy.length
     let cell = row.insertCell(0);
-    cell.innerHTML = element[0];
+    cell.innerHTML = element[0]; //nr_matricol 
+    
+    var studenti = document.querySelectorAll('#ul_su_curs>tbody>tr>td:first-child');
+    studenti.forEach(function(element,index,list){
+      console.log('element: ', element);
+      console.log('element content : ',element.textContent);
+    });
+
     for (let i=1; i<14; i++){
       this['cell'+i] = row.insertCell(i);
-      this['cell'+i].setAttribute('id', 'cell'+i);
+      // observer.observe(this['cell'+i],observerConfig);
+      this['cell'+i].setAttribute('id', 'cell_curs_'+index+'_'+i);
+      this['cell'+i].setAttribute('class', 'tableCell');
+      // this['cell'+i].setAttribute('onInput', 'someFunction(this);');
       this['cell'+i].setAttribute('contenteditable', true);
       // this['cell'+i].setAttribute('onChange', tdChangesHandler);
       if (element[3]==i){
         this['cell'+i].innerHTML = 1;
       }else{
-        this['cell'+i].innerHTML = '-';
+        this['cell'+i].innerHTML = null;
       }
+      // if(i==14){
+      //   this['cell'+i].innerHTML = function()
+      // }
     }
-  }
+  } // -----------end populatePrezenteCurs() ---------------
+
+  //---------------------NOT USED--------------------
   function populatePrezenteLab(element, index, arr){
     var row = tblBody.insertRow(index);
     let cell = row.insertCell(0);
     cell.innerHTML = element[0];
     for (let i=1; i<14; i++){
       this['cell'+i] = row.insertCell(i);
+      this['cell'+i].setAttribute('id', 'cel_lab'+index+'_'+i);
+      this['cell'+i].setAttribute('contenteditable', true);
       // row.insertCell(tableRef.rows.length);
       if (element[1]==i){
         this['cell'+i].innerHTML = 1;
@@ -145,6 +253,8 @@ function showRanking(category,type){
     for (let i=1; i<14; i++){
       // console.log('populare curs coloana',i);
       this['cell'+i] = row.insertCell(i);
+      this['cell'+i].setAttribute('id', 'cell_c'+index+'_'+i);
+      this['cell'+i].setAttribute('contenteditable', true);
       if (element[4]==i){
         this['cell'+i].innerHTML = element[3];
       }else{
@@ -152,66 +262,52 @@ function showRanking(category,type){
       }
     }
   }
-  // -------------- VERIFICARE UPDATE TD -----------------
-  var insertedNodes = [];
-  var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
-    var observer = new MutationObserver(function(mutations) {
-      mutations.forEach(function(mutation) {
-
-        // if(mutation.type === 'childList'){
-        //   var list_values = [].slice.call()
-        // }
-        for (var i = 0; i < mutation.addedNodes.length; i++){
-          // console.log(mutation.addedNodes[i]);
-          insertedNodes.push(mutation.addedNodes[i]);
-        }
-      })
-    });
-    var observerConfig = {
-      attributes: true,
-      childList: true,  //true for textContent,
-      // attributeOldValue: true,
-      characterData: false //false for textContent
-    }
-    
-    tblBody.setAttribute('id','tblbd');
-    var tableRows = document.querySelectorAll('#tblbd');
-    var trs = tableRows[0].children;
-    var arr = [].slice.call(trs);
-    console.log(arr);
-      // for (let i = 0; i < trs.length; i++){
-      //   var node = trs[i];
-      //   console.log(node);
-
-      //   observer.observe(node, observerConfig);
-      //   // console.log(insertedNodes);
-      // }   
-    // observer.observe(document, { childList: true });
-    // console.log(insertedNodes);
-    
-    
-
+  // console.log(editableFields);
+  // editableFields.forEach(function(element,index,list){
+  //   if(index%14 != 0){
+  //     observer.observe(element,observerConfig);
+  //   }
+  // })
+  // document.querySelectorAll('.tableCell').forEach(function(element,index,list){
+  //   observer.observe(element,observerConfig);
+  // })
+  if(category=='curs'){
+    observer.observe(document.querySelector('#ul_su_curs>tbody'),observerConfig);
+  }
+  else if(category == 'lab'){
+    observer.observe(document.querySelector('#ul_su_lab>tbody'),observerConfig);
+  }
+  else if (category == 'ev'){
+    console.log('no observer attached yet');
+    // observer.observe(document.querySelector('#ul_su_ev>tbody'),observerConfig);
+  }
 } // end showRanking
-
 
 function hide(category){
   if(category === 'curs'){
     document.getElementById('a_hide_c').style.display = "none";
     document.getElementById('a_insert_c').style.display = "none";
     document.getElementById('search_input_c').style.display = "none";
+    
     document.getElementById('csvFileId').style.display = "none";
     document.getElementById('csvFileLabelId').style.display = "none";
-
+    observer.disconnect();
     document.getElementById('ul_su_'+category).innerHTML = '';
     document.getElementById('ul_su_'+category).style.display = "none";
+    
     document.getElementById('a_show_c').style.display = "block";
   }
   if(category === 'lab'){
     document.getElementById('a_hide_l').style.display = "none";
     document.getElementById('a_insert_l').style.display = "none";
     document.getElementById('search_input_l').style.display = "none";
+    
+    document.getElementById('csvFileIdLab').style.display = "none";
+    document.getElementById('csvFileLabelIdL').style.display = "none";
+    observer.disconnect();
     document.getElementById('ul_su_'+category).innerHTML = '';
     document.getElementById('ul_su_'+category).style.display = "none";
+    
     document.getElementById('a_show_l').style.display = "block";
   }
   if(category === 'ev'){
@@ -248,17 +344,23 @@ function insertEveniment(){
   document.getElementById('sec1_1').style.display = "none";
 }
 function verificareInsertCurs(){
-  if (!activateErrorElemets(formConds)){return;}
+  if (!activateErrorElemets(formConds)){
+    console.log('rau');
+    return;
+  }
+
   let id_prof = cookieGetLoggedUserID();
+
   ajax.post('api/catalog', {
     cat: 'curs',
     nr_matricol: document.getElementById('nr_matricol').value,
-    data_notare: document.getElementById('data_n').value,
+    data_notare: document.getElementById('data_notare').value,
     saptamana: document.getElementById('saptamana').value,
     id_prof: cookieGetLoggedUserID() // = id_prof;
     }, function (text){
-      console.log(text);
-      if (text === 'true')  {
+      // console.log(text);
+      if (text == 'true')  {
+        setElementInvisible('prezentaInsertFail')
         setElementVisible('prezentaInsertSuccess');
         // sleep(2500).then(() => {
         // window.location.replace("/catalog");
@@ -268,6 +370,7 @@ function verificareInsertCurs(){
         },200000);
       }
       else {
+        setElementInvisible('prezentaInsertSuccess')
         setElementVisible('prezentaInsertFail');
         // sleep(2500).then(() => {
         // window.location.replace("/catalog");
@@ -282,29 +385,37 @@ function verificareInsertCurs(){
 function verificareInsertNota(){
   ajax.post('api/catalog', {
     cat: 'lab',
-    nr_matricol: getElementTextByID('nr_matricol'),
+    nr_matricol: getElementTextByID('nr_matricolLab'),
     nota: getElementTextByID('nota'),
-    data: getElementTextByID('data_notare'),
-    saptamana: getElementTextByID('saptamana'),
+    data_notare: getElementTextByID('data_notareLab'),
+    id_prof : cookieGetLoggedUserID(),
+    saptamana: getElementTextByID('saptamanaLab')
     }, function (text){
-
-      if (text === 'true')  {
+      
+      let checker = JSON.parse(text);
+      console.log('checker: ', checker);
+      if (checker == 'done')  {
+        console.log('dadada');
+        setElementInvisible('notaInsertFail');
         setElementVisible('notaInsertSuccess');
         // sleep(2500).then(() => {
         // window.location.replace("/catalog");
         // })
         setTimeout(function(){
           window.location.replace("/catalog");
-        },5000);
+        },10000);
       }
       else {
+        console.log('nununu');
+        console.log(text);
+        setElementInvisible('notaInsertSuccess')
         setElementVisible('notaInsertFail');
         // sleep(2500).then(() => {
         // window.location.replace("/catalog");
         // })
         setTimeout(function(){
           window.location.replace("/catalog");
-        },5000);
+        },10000);
       }
 
     });
@@ -336,22 +447,10 @@ function verificareInsertEveniment(){
 
     });
 }
-  
-  // inputElement.addEventListener("change", handleFiles, false); 
-  // ---------- VARIANTA ----------------
-  
-  // fileA.addEventListener("click", function (e) {
-  //   if (fileCSV) {
-  //     fileCSV.click();
-  //   }
-  //   e.preventDefault(); // prevent navigation to "#"
-  // }, false);
-  // ---------------END VARIANTA ----------------
-  
-  // var importCsv = function(){}
+
+//-----------------IMPORT & PARSE CSV -----------------
 window.onload = function(){
   var fileCSV = document.getElementById("csvFileId");
-
   var fileCSV2 = document.getElementById("csvFileIdLab");
 
 
@@ -360,18 +459,20 @@ window.onload = function(){
     var textType = /application\/vnd.ms-excel/;
     // text/plain
     // text/x-csv
-
     if (file.type.match(textType)) {
       var reader = new FileReader();
 
       reader.onload = function(e) {
-        // let data = reader.result
+        let fileContent = reader.result;
         ajax.post('api/catalog', {
           cat: 'file',
           csvDestination: 'curs',
-          data: reader.result
+          data: fileContent
         }, function(response){
           console.log(response);
+          if(response=='true'){
+            alert('Fisierul a fost importat cu succes in baza de date');
+          }
         });
       }
       // reader.readAsArrayBuffer(file);
@@ -392,12 +493,16 @@ window.onload = function(){
       var reader = new FileReader();
 
       reader.onload = function(e) {
+        console.log('here');
         ajax.post('api/catalog', {
           cat: 'file',
           csvDestination: 'lab', 
           data: reader.result
         }, function(response){
           console.log(response);
+          if(response=='true'){
+            alert('Fisierul a fost importat cu succes in baza de date');
+          }
         });
       }
       var text = reader.readAsText(file,'UTF-8');
@@ -406,8 +511,9 @@ window.onload = function(){
     }
   });
 }
-  
+//------------------END IMPORT CSV --------------------
 
+  // -------------IMPORT FOR FILES --NEEDS REWORK. NOT USED ------------
   // function handleFiles(files){
   //   var fileInput = document.getElementById("csvFileId");
   //   var filess = fileInput.files;  
@@ -424,8 +530,8 @@ window.onload = function(){
   //     console.log(response);
   //   })
   // }
-
   // document.querySelector("#csvFileId").onchange = importCsv;
+  // ----------------------END IMP-------------------------------
   
 </script>
 <header>
@@ -435,7 +541,11 @@ window.onload = function(){
       <li id="home_li" class="nav_item"><a id="a_frontpage" href="/home">Home</a></li>
       <li id="catalog_li" class="nav_item"><a id="a_catalog" href="/catalog">Rankings</a></li>
       <li id="profile_li" class="nav_item"><a id="a_profile" href="/profile">Profile</a>
-        <li id="ddn" class="nav_item"><a id="logout" href="javascript:logout();">Logout</a>
+      <li id="ddn" class="nav_item"><a id="logout" href="javascript:logout();">Logout</a>
+			<!--ul id="dropdown"-->
+				<!--li id="myprofile_li"><a id="a_myprofile" href="myprofile.html">Detalii</a></li-->
+				<!--li id="logout_li"><a id="a_logout" href="logout.html">Logout</a></li-->
+			<!--/ul-->
 			</li>
 		</ul>
 	</nav>
@@ -471,19 +581,19 @@ window.onload = function(){
           setElementInvisible('prezentaInsertFail');
         </script>
         <div>
-          <label for="nr_mat">Nr_matricol*</label>
-          <input type="text" name="nr_mat" id="nr_matricol" onblur="onBlur();">
-          <span id="nr_matricol_error" >Nr matricol nu este valid</span>
+          <label for="nr_matricol">Nr_matricol*</label>
+          <input type="text" name="nr_mat" id="nr_matricol" onblur="blurChecker('nr_matricol');">
+          <span id="nr_matricol_error" style="display:none" >Nr matricol nu este valid</span>
         </div>
         <div>
           <label for="data_notare">Data Notare*</label>
-          <input type="date" name="data_notare" id="data_n">
-          <!-- <span id="data_notare_error"  onblur="onBlur();">Selectati data prezentei.</span> -->
+          <input type="date" name="data_notare" id="data_notare" onblur="blurChecker('data_notare');">
+          <span id="data_notare_error"  style="display:none">Selectati data prezentei.</span>
         </div>
         <div>
-          <label for="sapt">Saptamana*</label>
-          <input type="number" name="sapt" id="saptamana" onblur="onBlur();">
-          <span id="saptamana_error">Alegeti saptamana in care a fost pusa prezenta.</span>
+          <label for="saptamana">Saptamana*</label>
+          <input type="number" name="sapt" min="1" step="1" max="13" id="saptamana" onblur="blurChecker('saptamana');">
+          <span id="saptamana_error" style="display:none">Alegeti saptamana in care a fost pusa prezenta.</span>
         </div>
         <div class="actions">
           <button type="button" onclick="verificareInsertCurs();">INSERARE PREZENTA</button>
@@ -494,7 +604,8 @@ window.onload = function(){
   	<section id="sec2" class="bigtitle">
     	<h2 class="bigtitle-title">LABORATORY SCORES</h2>
     	<a id="a_show_l" href="#" onclick="showRanking('lab','note');" class="info-link">Click here for details</a>
-    	<table id="ul_su_lab" class="table_table">
+    	
+      <table id="ul_su_lab" class="table_table">
     	</table>
 
     	<input type="text" id="search_input_l" onkeyup="myFunction();" placeholder="Search for names..">
@@ -516,24 +627,24 @@ window.onload = function(){
           setElementInvisible('notaInsertFail');
         </script>
         <div>
-          <label for="nr_matricol">Nr_matricol*</label>
-          <input type="text" name="nr_matricol" id="nr_matricol" onblur="onBlur();">
-          <span id="nr_matricol_error">Nr matricol nu este valid</span>
+          <label for="nr_matricolLab">Nr_matricol*</label>
+          <input type="text" name="nr_matricolLab" id="nr_matricolLab" onblur="blurChecker('nr_matricolLab');">
+          <span id="nr_matricolLab_error" style="display:none">Nr matricol nu este valid</span>
         </div>
         <div>
           <label for="nota">Nota</label>
-          <input type="number" name="github" id="nota" onblur="onBlur();">
-          <span id="nota_error">Nota este obligatorie</span>
+          <input type="number" name="github" id="nota" min="1" max="10" step="1" onblur="blurChecker('nota');">
+          <span id="nota_error" style="display:none">Nota este obligatorie</span>
         </div>
         <div>
-          <label for="data_notare">Data_notare*</label>
-          <input type="date" name="data_notare" id="data_notare" onblur="onBlur();">
-          <span id="data_notare_error">Data nu este valida</span>
+          <label for="data_notareLab">Data_notare*</label>
+          <input type="date" name="data_notareLab" id="data_notareLab" onblur="blurChecker('data_notareLab');">
+          <span id="data_notareLab_error" style="display:none">Data nu este valida</span>
         </div>
         <div>
-          <label for="saptamana">Saptamana*</label>
-          <input type="number" name="saptamana" id="saptamana" onblur="onBlur();">
-          <span id="saptamana_error">Alegeti saptamana in care a fost pusa nota.</span>
+          <label for="saptamanaLab">Saptamana*</label>
+          <input type="number" name="saptamanaLab" id="saptamanaLab" min="1" step="1" max="13" onblur="blurChecker('saptamanaLab');">
+          <span id="saptamanaLab_error" style="display:none">Alegeti saptamana in care a fost pusa nota.</span>
         </div>
 
         <div class="actions">
@@ -564,18 +675,15 @@ window.onload = function(){
           setElementInvisible('eventInsertFail')
         </script>
         <div>
-
-          <label for="title">Titlu*</label>
-          <input type="text" name="title" id="title" onblur="onBlur();">
-          <span id="nota_error">Titlul este obligatoriu</span>
+          <label for="eveniment">Eveniment*</label>
+          <input type="text" name="eveniment" id="eveniment">
+          <span id="eveniment_error" style="display:none">Titlul evenimentului este obligatoriu</span>
         </div>
-
-        <div>
-          <label for="saptamana">Descriere*</label>
-          <input type="text" name="saptamana" id="saptamana" onblur="onBlur();">
-          <span id="facebook_error">Adaugati o scurta descriere.</span>
+         <div>
+          <label for="passkey">Passkey</label>
+          <input type="password" name="passkey" id="passkey" >
+          <span id="passkey_error" style="display:none">Adaugati o scurta descriere.</span>
         </div>
-
         <div class="actions">
           <button type="button" onclick="verificareInsertEveniment();">INSERARE EVENIMENT</button>
         </div>

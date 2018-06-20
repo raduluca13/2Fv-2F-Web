@@ -88,7 +88,8 @@ class catalog_services extends Services
 			$prezenteLab = array();
 
 			$stmt = $this->db->getConn()->prepare($query);
-			$stmt->bind_param('d',$id);
+
+			$stmt->bind_param('i',$id);
 			$stmt->execute();
 			$stmt->bind_result($nr_mat, $sapt);
 			while ($stmt->fetch()){
@@ -98,12 +99,11 @@ class catalog_services extends Services
 		}
 
 		return $arr;
-	}
+	}//-------------NOT USED-----------
 	public function getPrezenteEv(){
 		//from external
 		return null;
 	}
-
 	public function getNoteLab($id=null){
 
 		if($id==null){
@@ -152,33 +152,45 @@ class catalog_services extends Services
         $cat = 1;
         $sth->bind_param("sisis", $nr_matricol, $cat, $data_notare, $id_prof, $week);
        	return $sth->execute();
-
 	}
-	public function insertPrezentaLab($nr_matricol, $saptamana){
-		// $Q = "SELECT id from prezente order by id desc limit 1";
-		// $s = $this->db->getConn()->prepare($Q);
-		// $s->execute();
-		// $s->bind_result($id);
-		// while($s->fetch());
-		// $id=$id+1;
+	// public function insertPrezentaLab($nr_matricol, $saptamana){
+	// 	// $Q = "SELECT id from prezente order by id desc limit 1";
+	// 	// $s = $this->db->getConn()->prepare($Q);
+	// 	// $s->execute();
+	// 	// $s->bind_result($id);
+	// 	// while($s->fetch());
+	// 	// $id=$id+1;
 
-		$query = "INSERT INTO prezente (id,nr_matricol,categorie,week) VALUES (?,?,2,?)";
+	// 	$query = "INSERT INTO prezente (id,nr_matricol,categorie,week) VALUES (?,?,2,?)";
+ //        $sth = $this->db->getConn()->prepare($query);
+ //        $sth->bind_param("iss", $id, $nr_matricol, $saptamana);
+ //        return $sth->execute();
+	// }
+	public function insertNotaLab($nr_matricol, $nota, $data_notare, $id_prof, $saptamana){
+		$Q = "SELECT id from note order by CONVERT(SUBSTRING(id,1), SIGNED INTEGER) desc limit 1";
+		$s = $this->db->getConn()->prepare($Q);
+		$s->execute();
+		$s->bind_result($id);
+		while($s->fetch());
+		$id = intval($id)+1;
+		$id = strval($id);
+		$query = "INSERT INTO tw.note(id,nr_matricol,categorie,valoare,data_notare,id_prof, saptamana) VALUES (?,?,?,?,?,?,?)";
         $sth = $this->db->getConn()->prepare($query);
-        $sth->bind_param("iss", $id, $nr_matricol, $saptamana);
-        return $sth->execute();
-	}
-
-	public function insertNotaLab($nr_matricol, $nota, $data_notare, $saptamana){
-		// $Q = "SELECT id from note order by id desc limit 1";
-		// $s = $this->db->getConn()->prepare($Q);
-		// $s->execute();
-		// $s->bind_result($id);
-		// while($s->fetch());
-
-		$query = "INSERT INTO tw.note(nr_matricol,categorie,valoare,data_notare,week) VALUES (?,2,?,?,?)";
-        $sth = $this->db->getConn()->prepare($query);
-        $sth->bind_param("siss", $nr_matricol, $nota, $data_notare, $saptamana);
-        return $sth->execute();
+        
+        $categorie = '2';
+        echo var_dump($id);
+        echo var_dump($nr_matricol);
+        echo var_dump($nota);
+        echo var_dump($data_notare);
+        echo var_dump($id_prof);
+        echo var_dump($saptamana);
+        $sth->bind_param('sssssii', $id, $nr_matricol, $categorie, $nota, $data_notare, $id_prof, $saptamana);
+        if($sth->execute()){
+        	return true;
+        }
+        else{
+        	return $sth->error;
+        }
 	}
 	public function insertEveniment($title, $descriere){
 		$Q = "SELECT id from evenimente order by id desc limit 1";
@@ -193,28 +205,24 @@ class catalog_services extends Services
         $sth->bind_param("dss", $id, $title, $descriere);
         return $sth->execute();
 	}
-
 	public function insertPrezenteCSV($records, $destination){
-		$arr = preg_split( '/\r\n/', $records);
+		$arr = explode( '\n', $records);
+		$flag=1;
 
-		if($destination == 'curs'){
-			$Q = "SELECT id from tw.prezente order by id desc limit 1";
-			$s = $this->db->getConn()->prepare($Q);
-			$s->execute();
-			$s->bind_result($id);
-			while($s->fetch()){};
-		}else if($destination == 'lab'){
-			$Q = "SELECT id from tw.note order by id desc limit 1";
-			$s = $this->db->getConn()->prepare($Q);
-			$s->execute();
-			$s->bind_result($id);
-			while($s->fetch()){};
-		}
-		$id = (int)$id+1;
-		foreach($arr as $item){
-			$line = preg_split('/,/',$item);
-			$id = (int)$id+1;
-			$id = (string)$id;
+		// if($destination == 'lab'){
+		// 	$Q = "SELECT id from tw.note order by id desc limit 1";
+		// 	$s = $this->db->getConn()->prepare($Q);
+		// 	$s->execute();
+		// 	$s->bind_result($idL);
+		// 	while($s->fetch()){};
+		// 	$s->close();
+		// 	$idL = intval($idL);
+		// 	$idL = $idL + 1;
+		// 	$idL = strval($idL);
+		// }
+		foreach ($arr as $item){
+			$line = explode(',',$item);		
+			
 			if($destination == 'curs'){
 				$query = "INSERT INTO tw.prezente (`nr_matricol`,`categorie`, `data_notare`,`id_prof`,`week`) VALUES (?,?,?,?,?)";
 				$stmt = $this->db->getConn()->prepare($query);
@@ -223,28 +231,63 @@ class catalog_services extends Services
 				$dn = date('Y-m-d', strtotime($line[2]));
 				$idp = intval($line[3]);
 				$wk = $line[4];
+
 				$stmt->bind_param('sisis', $nrm, $cat, $dn, $idp, $wk);
 				if(!$stmt->execute()){
-					echo 'error';
+					echo $stmt->error;
+					$flag=0;
 				}
+				$stmt->close();
 			}else if($destination == 'lab'){
-				$query = "INSERT INTO tw.note (`id`,`nr_matricol`,`categorie`, `valoare`, `data_notare`,`id_prof`,`saptamana`) VALUES (?,?,?,?,?,?,?)";
+				$query = "INSERT INTO tw.note (`nr_matricol`,`categorie`, `valoare`, `data_notare`,`id_prof`,`saptamana`) VALUES (?,?,?,?,?,?)";
 				$stmt = $this->db->getConn()->prepare($query);
 				$nrm = $line[0];
-				$cat = intval($line[1]);
+				$cat = $line[1];	//intval($line[1]);
 				$val = intval($line[2]);
 				$dn = date('Y-m-d', strtotime($line[3]));
 				$idp = intval($line[4]);
-				$wk = $line[5];
-				$stmt->bind_param('ssiisis', $id, $nrm, $cat, $dn, $idp, $wk);
+				$wk = intval($line[5]);
+				$stmt->bind_param('ssisii', $nrm, $cat, $val, $dn, $idp, $wk);
 				if(!$stmt->execute()){
-					echo 'error';
+					echo $stmt->error;
+					$flag=0;
 				}
 			}
-			
-			$line = '';
 		}
-		// return $arr;
-		// $arr = str_split($records, 5)
+		if($flag==1){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	public function existsPrezentaCurs($record){
+		$query = "SELECT count(nr_matricol) from tw.prezente where nr_matricol=? and data_notare=? and id_prof = ? and week=? and categorie=1";
+		$stmt = $this->db->getConn()->prepare($query);
+		$stmt->bind_param('sssi',$record[0],$record[1],$record[2],$record[3]);
+		$stmt->execute();
+		$stmt->bind_result($count);
+		while($stmt->fetch()){}
+		if($count==0){
+			return false;	
+		}
+		else{
+			return true;
+		}
+	}
+	public function existsNotaLab($record){
+		$query = "SELECT count(nr_matricol) from tw.note where nr_matricol=? and valoare=? and data_notare=? and id_prof = ? and saptamana=? and categorie='2'";
+		$stmt = $this->db->getConn()->prepare($query);
+		echo var_dump($record);
+		$stmt->bind_param('sssii',$record[0],$record[1],$record[2],$record[3],$record[4]);
+		$stmt->execute();
+		$stmt->bind_result($count);
+		while($stmt->fetch()){}
+		if($count==0){
+			return false;	
+		}
+		else{
+			return true;
+		}
 	}
 }

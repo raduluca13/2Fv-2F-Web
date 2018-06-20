@@ -14,7 +14,9 @@
 #a_hide_c{
 	clear:left;
 }
-#sec1_1, #sec2_1, #sec3_1, #csvFileId, #csvFileLabelId, #csvFileLabelIdL, #a_hide_c, #a_hide_l, #a_hide_e, #a_insert_c, #a_insert_l, #a_insert_e, #ul_su_curs, #ul_su_lab, #ul_su_ev, .future_events, #search_input_c, #search_input_l, #search_input_e {
+#sec1_1, #sec2_1, #sec3_1, #csvFileId, #csvFileLabelId, #csvFileLabelIdL, #a_hide_c, #a_hide_l,
+ #a_hide_e, #a_insert_c, #a_insert_l, #a_insert_e, #ul_su_curs, #ul_su_lab, #ul_su_ev, .future_events, 
+ #search_input_c, #search_input_l, #search_input_e {
 	display:none;
 }
 
