@@ -11,13 +11,8 @@
 				<li id="home_li" class="nav_item"><a id="a_frontpage" href="/home">Home</a></li>
 				<li id="sugestii_li" class="nav_item"><a id="a_sugestii" href="/sugestii">Suggestions</a></li>
 				<li id="catalog_li" class="nav_item"><a id="a_catalog" href="/catalog">Rankings</a></li>
-				<li id="profile" class="nav_item"><a id="a_profile" href="/profile">Profile</a>
-          <li id="ddn" class="nav_item"><a id="logout" href="javascript:logout();">Logout</a>
-					<!--ul id="dropdown"-->
-						<!--li id="myprofile_li"><a id="a_myprofile" href="myprofile.html">Detalii</a></li-->
-						<!--li id="logout_li"><a id="a_logout" href="logout.html">Logout</a></li-->
-					<!--/ul-->
-				</li>
+				<li id="profile" class="nav_item"><a id="a_profile" href="/profile">Profile</a></li>
+        <li id="ddn" class="nav_item"><a id="logout" href="javascript:logout();">Logout</a></li>
 			</ul>
 		</nav>
 </header>
@@ -101,17 +96,26 @@
   <iframe allowtransparency="true" frameborder="0" scrolling="yes" seamless="seamless"
   src=""; width="100%" height="470" max-height="470" min-height="470" style="margin-bottom:0%;" id="github_frame"></iframe>
 </section>
-<section class="bigtitle">
+<section id="renderList" class="bigtitle">
+
   <h2 class="bigtitle-title">WEB events</h2>
-  <ul class="future_events">
-    <li class="future_events_li" id="future1"></li>
-    <li class="future_events_li" id="future2"></li>
-    <li class="future_events_li" id="future3"></li>
-    <li class="future_events_li" id="future4"></li>
-    <li class="future_events_li" id="future5"></li>
-    <li class="future_events_li" id="future6"></li>
-  </ul>
-  <script src="/views/students_home/js/future_events.js" type="text/javascript"></script>
   <a href="/sugestii" class="info-link">See more events</a>
 </section>
+<div id="popupBoxOnePosition">
+      <div class="popupBoxWrapper">
+        <div class="popupBoxContent">
+          <span id="profile_success" style="display:block; color: #11aa0b; font-weight: bold;">The key is valid!</span>
+           <span id="profile_failure" style="display:block; color: #e21212; font-weight: bold;">The key is invalid!</span>
+           <script type="text/javascript">
+              setElementInvisible('profile_success')
+              setElementInvisible('profile_failure')
+              </script>
+                  <h3>Please enter the validation key!</h3>
+          <label>Key: </label>
+          <input id="inp" type="text" name="">
+           <button type="button" id="buttonasd" <a href="javascript:void(0)" onclick="toggle_visibility('popupBoxOnePosition');"></a>Back</button>
+              <button type="button" id="edit_button">Validate</button>
+        </div>
+      </div>
+    </div>
 </main>

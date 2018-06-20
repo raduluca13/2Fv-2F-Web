@@ -1,4 +1,8 @@
 /*Marius Cretu*/
+function sleep (time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
+
 
 function verify_nullable(link){
     return (link === "");
@@ -105,16 +109,108 @@ function retrieve_courses()
 
 function PopulateEvents()
 {
-  ajax.get('api/getevents',{
-  }, function (events)
+   (function(){
+        var ul = document.createElement('ul');
+        ul.setAttribute('class', "future_events");
+        ul.setAttribute('id', 'ul_su_even');
+        ul.setAttribute('display', 'none');
+        ajax.get('api/getevents',{ id: cookieGetLoggedUserID() 
+         }, function (events)
+        {
+        events = events.split("#!#");
+        events.pop();
+
+        var evenimente = [];
+        var ids = [];
+        for(var i = 0; i < events.length; i++){
+          if(i % 2 == 0) ids.push(events[i]);
+          else evenimente.push(events[i]);
+        }
+        var t;
+        document.getElementById('sec3').appendChild(ul);
+        var idx = 0;
+        evenimente.forEach(renderProductList);
+
+        function renderProductList(element, index, arr) {
+            var li = document.createElement('li');
+            li.setAttribute('class','future_events_li');
+            li.setAttribute('id',ids[idx]);
+            li.setAttribute('href',"javascript:void(0)");
+            li.setAttribute('onclick',"toggle_visibility('popupBoxOnePosition',id);")
+            ul.appendChild(li);
+            t = document.createTextNode(element);
+            li.innerHTML=li.innerHTML + element;
+            idx++;
+        }
+
+        // Add a "checked" symbol when clicking on a list item
+
+        var list = document.querySelector('.future_events');
+        if(list){
+        list.addEventListener('click', function(ev) {
+          if (ev.target.tagName === 'LI') {
+            ev.target.classList.toggle('checked');
+          }
+        }, false);
+        }
+
+        var btn = document.getElementById('buttonasd');
+
+        btn.addEventListener('click', function(e){
+
+        var list = document.querySelectorAll('.future_events_li');
+
+        var div_array = [...list]; // converts NodeList to Array
+        div_array.forEach(div => {
+          if (div.tagName === 'LI' && div.classList.toggle('checked'))
+        div.classList.toggle('checked');
+        /*apasa pe butonul de validare*/
+        
+      });
+    });
+
+    });
+
+})();
+}
+
+
+function attend_event(id,v_key){
+  ajax.post('api/getevents',{e_id: id, s_id: cookieGetLoggedUserID(), valid_key: v_key}, function (response)
   {
-    events = events.split("#!#");
-    document.getElementById("future1").textContent=events[0];
-    document.getElementById("future2").textContent=events[1];
-    document.getElementById("future3").textContent=events[2];
-    document.getElementById("future4").textContent=events[3];
-    document.getElementById("future5").textContent=events[4];
-    document.getElementById("future6").textContent=events[5];
+    
+    if(response === 'true')
+    {
+
+        setElementVisible('profile_success');
+        sleep(2000).then(() => {
+        window.location.replace("/sugestii");
+        })
+    }
+    else
+    {
+        setElementVisible('profile_failure');
+        sleep(2000).then(() => {
+        window.location.replace("/sugestii");
+        })
+    }
+  });
+}
+
+function toggle_visibility(id,element) {
+
+var e = document.getElementById(id);
+
+if(e.style.display == 'block'){
+
+  e.style.display = 'none';
+}
+else
+  e.style.display = 'block';  
+  var valid_btn = document.getElementById('edit_button');
+  valid_btn.addEventListener('click', function(e){
+    var key = getElementTextByID('inp');
+  attend_event(element,key);
   });
 }
 

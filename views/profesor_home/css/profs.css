@@ -79,7 +79,7 @@ ul{
   height:100%;
 	position:relative;
 	grid-auto-rows: 1fr;
-	grid-template-columns: repeat(3, 1fr);
+	grid-template-columns: repeat(4, 1fr);
 }
 
 .nav_item a{
@@ -101,7 +101,7 @@ ul{
 	border-top-left-radius: 17px;
 	border-bottom-left-radius: 17px;
 }
-#sugestii_li{
+#catalog_li{
 	grid-row:1;
 	grid-column:2;
 }
@@ -344,4 +344,37 @@ section {
 #profile{
 	grid-row:1;
 	grid-column:2;
+}
+
+/*for pop-up*/
+#popupBoxOnePosition{
+  top: 0; left: 0; position: fixed; width: 100%; height: 120%;
+  background-color: rgba(0,0,0,0.7); display: none;
+}
+.popupBoxWrapper{
+  width: 550px; margin: 50px auto; text-align: left;
+
+
+}
+.popupBoxContent{
+  background-color: #FFF; padding: 15px;
+}
+
+#buttonasd{
+  margin-left: 10px;
+    grid-column: 1;
+    border: 1px solid rgba(191, 216, 227, .8);
+    border-radius: 5px;
+    color: #fff;
+    background-color: #3498db;
+    font-size: 120%;
+}
+#edit_button{
+  margin-right: 10px;
+    grid-column: 4;
+    border: 1px solid rgba(191, 216, 227, .8);
+    border-radius: 5px;
+    color: #fff;
+    background-color: #3498db;
+    font-size: 120%;
 }

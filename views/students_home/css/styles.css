@@ -273,7 +273,7 @@ section {
 .future_events li {
   cursor: pointer;
   position: relative;
-  padding: 12px 8px 12px 40px;
+  padding: 6px 50px 12px 50px;
   list-style-type: none;
   background: #eee;
   font-size: 18px;
@@ -328,7 +328,7 @@ section {
   position: absolute;
   right: 0;
   top: 0;
-  padding: 12px 16px 12px 16px;
+  padding: 8px 12px 8px 12px;
 }
 
 .close:hover {
@@ -432,4 +432,37 @@ section {
   background-image: -moz-linear-gradient(top, #aed5ed, #7bbbe2 70%, #5aaadb);
   background-image: -o-linear-gradient(top, #aed5ed, #7bbbe2 70%, #5aaadb);
   background-image: linear-gradient(to bottom, #aed5ed, #7bbbe2 70%, #5aaadb);
+}
+
+/*for pop-up*/
+#popupBoxOnePosition{
+  top: 0; left: 0; position: fixed; width: 100%; height: 120%;
+  background-color: rgba(0,0,0,0.7); display: none;
+}
+.popupBoxWrapper{
+  width: 550px; margin: 50px auto; text-align: left;
+
+
+}
+.popupBoxContent{
+  background-color: #FFF; padding: 15px;
+}
+
+#buttonasd{
+  margin-left: 10px;
+    grid-column: 1;
+    border: 1px solid rgba(191, 216, 227, .8);
+    border-radius: 5px;
+    color: #fff;
+    background-color: #3498db;
+    font-size: 120%;
+}
+#edit_button{
+  margin-right: 10px;
+    grid-column: 4;
+    border: 1px solid rgba(191, 216, 227, .8);
+    border-radius: 5px;
+    color: #fff;
+    background-color: #3498db;
+    font-size: 120%;
 }

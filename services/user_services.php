@@ -197,18 +197,48 @@ class User_Services extends Services
       return ($suma / 3) /10;
     }
 
-    public function getevents()
+    public function getevents($id)
     {
         $eveniment=null;
+        $e_id = null;
         $eveniment_array= array();
-        $sth = $this->db->GetConn()->prepare("SELECT eveniment FROM tw.evenimente");
-        $sth->bind_result($eveniment);
+        $sth = $this->db->GetConn()->prepare("SELECT id, eveniment FROM evenimente WHERE id not in
+        (
+                SELECT e_id
+                FROM evidenta_evenimente
+                where s_id = ?
+                
+        )");
+        $sth->bind_param("i",$id);
+        $sth->bind_result($e_id, $eveniment);
         $sth->execute();
         while ($sth->fetch())
         {
-            array_push($eveniment_array,$eveniment);
+            array_push($eveniment_array,$e_id,$eveniment);
         }
         return $eveniment_array;
+    }
+
+    public function check_event($e_id, $s_id, $valid_key) /*Marius Cretu*/
+    {
+        $result = null;
+        $valid_key = md5($valid_key);
+
+        $sth = $this->db->GetConn()->prepare("SELECT count(*) 
+        from evenimente 
+        where validation_key like ? and id = ?;");
+
+        $sth->bind_param("si", $valid_key, $e_id);
+        $sth->bind_result($result);
+        $sth->execute();
+        while ($sth->fetch()){   } 
+
+        if ($result !== 0){
+        $sth = $this->db->GetConn()->prepare("INSERT into evidenta_evenimente (e_id,s_id) values(?,?);");
+        $sth->bind_param("ii",$e_id, $s_id);
+        return $sth->execute();
+        }
+        return false;
     }
 
 

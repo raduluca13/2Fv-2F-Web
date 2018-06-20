@@ -80,7 +80,7 @@ ul{
   height:100%;
 	position:relative;
 	grid-auto-rows: 1fr;
-	grid-template-columns: repeat(5, 1fr);
+	grid-template-columns: repeat(4, 1fr);
 }
 
 .nav_item a{
@@ -94,6 +94,8 @@ ul{
   height: 21px;
   padding-top: 3px;
 }
+
+/*pentru student + sugestii*/
 #home_li{
 	grid-row:1;
 	grid-column:1;
@@ -102,17 +104,36 @@ ul{
 	border-top-left-radius: 17px;
 	border-bottom-left-radius: 17px;
 }
-#sugestii_li{
+
+#catalog_li{
 	grid-row:1;
 	grid-column:2;
 }
-#catalog_li{
-	grid-row:1;
-	grid-column:3;
+
+#profile_li{
+  grid-row:1;
+  grid-column: 3;
+}
+#sugestii_li{
+  grid-row:1;
+  grid-column:3; 
+}
+#ddn{
+  grid-row:1;
+  grid-column: 4;
 }
 #ddn a{
 	border-top-right-radius: 17px;
 	border-bottom-right-radius: 17px;
+}
+#logout{
+  grid-row:1;
+  grid-column: 4;
+}
+
+#logout a{
+  border-top-right-radius: 17px;
+  border-bottom-right-radius: 17px;
 }
 
 main {
