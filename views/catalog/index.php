@@ -1,14 +1,7 @@
 <script src="/login/js/login.js" type="text/javascript"></script>
 <!-- <script src="/catalog/js/util.js" type="text/javascript"></script> -->
 <script>
-var formConds = [];
-var editedFields = [];
-var editableFields = [];
-var listedStudentsCurs = document.createElement("div");
-listedStudentsCurs.setAttribute('id','lista_studenti');
-listedStudentsCurs.style.display = 'none';
-console.log(listedStudentsCurs);
-var listedStudentsLab = [];
+
 
 var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
 var observer = new MutationObserver(function(mutations) {
@@ -45,6 +38,177 @@ var observerConfig = {
 }
 
 // observer.observe(document, observerConfig);
+
+
+</script>
+<header>
+	<h1 class="title">My WEB way!</h1>
+	<nav>
+		<ul id="nav_ul">
+      <li id="home_li" class="nav_item"><a id="a_frontpage" href="/home">Home</a></li>
+      <li id="catalog_li" class="nav_item"><a id="a_catalog" href="/catalog">Rankings</a></li>
+      <li id="profile_li" class="nav_item"><a id="a_profile" href="/profile">Profile</a>
+      <li id="ddn" class="nav_item"><a id="logout" href="javascript:logout();">Logout</a>
+			<!--ul id="dropdown"-->
+				<!--li id="myprofile_li"><a id="a_myprofile" href="myprofile.html">Detalii</a></li-->
+				<!--li id="logout_li"><a id="a_logout" href="logout.html">Logout</a></li-->
+			<!--/ul-->
+			</li>
+		</ul>
+	</nav>
+</header>
+
+<div class="main_container">
+	<section id="sec1" class="bigtitle">
+    	<h2 class="bigtitle-title">COURSE SCORES</h2>
+    	<a id="a_show_c" href="#" onclick="showRanking('curs','prezente');" class="info-link">Click here for details</a>
+
+	    <table id="ul_su_curs" class="table_table">
+	    </table>
+
+    	<input type="text" id="search_input_c" onkeyup="myFunction()" placeholder="Search for names..">
+   		<a id="a_hide_c" class="info-link" href="#" onclick="hide('curs');">Hide</a>
+      <a id="a_insert_c" class="info-link" href="#" onclick="insertPrezentaCurs();">Adaugati o prezenta</a>
+      
+      <label id="csvFileLabelId" for="csvFileId">Adauga prezente din fisier CSV
+        <input name="csvFileId" id="csvFileId" type="file" style="display:none">
+         <!-- onchange="handleFiles(this.files)" -->
+      </label>
+      <!-- <a href="#" id="a_csv_c" onclick="importCsv();">Adauga prezente din fisier CSV</a>  -->
+  	</section>
+
+    <section id="sec1_1" class="bigtitle">
+      <h1 style="text-align:center">Inserare prezenta curs</h1>
+      <form class="register" action="#" method="post">
+
+        <span id="prezentaInsertSuccess">Prezenta inserata cu succes.</span>
+        <span id="prezentaInsertFail">Prezenta nu a putut fi inserata.</span>
+        <script>
+          setElementInvisible('prezentaInsertSuccess');
+          setElementInvisible('prezentaInsertFail');
+        </script>
+        <div>
+          <label for="nr_matricol">Nr_matricol*</label>
+          <input type="text" name="nr_mat" id="nr_matricol" onblur="blurChecker('nr_matricol');">
+          <span id="nr_matricol_error" style="display:none" >Nr matricol nu este valid</span>
+        </div>
+        <div>
+          <label for="data_notare">Data Notare*</label>
+          <input type="date" name="data_notare" id="data_notare" onblur="blurChecker('data_notare');">
+          <span id="data_notare_error"  style="display:none">Selectati data prezentei.</span>
+        </div>
+        <div>
+          <label for="saptamana">Saptamana*</label>
+          <input type="number" name="sapt" min="1" step="1" max="13" id="saptamana" onblur="blurChecker('saptamana');">
+          <span id="saptamana_error" style="display:none">Alegeti saptamana in care a fost pusa prezenta.</span>
+        </div>
+        <div class="actions">
+          <button type="button" onclick="verificareInsertCurs();">INSERARE PREZENTA</button>
+        </div>
+      </form>
+    </section>
+
+  	<section id="sec2" class="bigtitle">
+    	<h2 class="bigtitle-title">LABORATORY SCORES</h2>
+    	<a id="a_show_l" href="#" onclick="showRanking('lab','note');" class="info-link">Click here for details</a>
+    	
+      <table id="ul_su_lab" class="table_table">
+    	</table>
+
+    	<input type="text" id="search_input_l" onkeyup="myFunction();" placeholder="Search for names..">
+    	<a id="a_hide_l" class="info-link" href="#" onclick="hide('lab');">Hide</a>
+      <a id="a_insert_l" class="info-link" href="#" onclick="insertNotaLab();">Adaugati o nota</a>
+      <label id="csvFileLabelIdL" for="csvFileIdLab">Adauga prezente din fisier CSV
+        <input name="csvFileIdLab" id="csvFileIdLab" type="file" style="display:none">
+         <!-- onchange="handleFiles(this.files)" -->
+      </label>
+  	</section>
+
+    <section id="sec2_1" class="bigtitle">
+      <h1 style="text-align:center">Inserare nota laborator</h1>
+      <form class="register" action="#" method="post">
+        <span id="notaInsertSuccess">Nota inserata cu succes.</span>
+        <span id="notaInsertFail">Nota nu a putut fi inserata.</span>
+        <script>
+          setElementInvisible('notaInsertSuccess');
+          setElementInvisible('notaInsertFail');
+        </script>
+        <div>
+          <label for="nr_matricolLab">Nr_matricol*</label>
+          <input type="text" name="nr_matricolLab" id="nr_matricolLab" onblur="blurChecker('nr_matricolLab');">
+          <span id="nr_matricolLab_error" style="display:none">Nr matricol nu este valid</span>
+        </div>
+        <div>
+          <label for="nota">Nota</label>
+          <input type="number" name="github" id="nota" min="1" max="10" step="1" onblur="blurChecker('nota');">
+          <span id="nota_error" style="display:none">Nota este obligatorie</span>
+        </div>
+        <div>
+          <label for="data_notareLab">Data_notare*</label>
+          <input type="date" name="data_notareLab" id="data_notareLab" onblur="blurChecker('data_notareLab');">
+          <span id="data_notareLab_error" style="display:none">Data nu este valida</span>
+        </div>
+        <div>
+          <label for="saptamanaLab">Saptamana*</label>
+          <input type="number" name="saptamanaLab" id="saptamanaLab" min="1" step="1" max="13" onblur="blurChecker('saptamanaLab');">
+          <span id="saptamanaLab_error" style="display:none">Alegeti saptamana in care a fost pusa nota.</span>
+        </div>
+
+        <div class="actions">
+          <button type="button" onclick="verificareInsertNota();">ADAUGA NOTA LABORATOR</button>
+        </div>
+      </form>
+  </section>
+
+	<section id="sec3" class="bigtitle">
+    <h2 class="bigtitle-title">Other Events Standings</h2>
+    <a id="a_show_e" href="#" onclick="showRanking('ev','ev');" class="info-link">Click here for details</a>
+
+    <table id="ul_su_ev" class="table_table">
+    </table>
+
+    <input type="text" id="search_input_e" onkeyup="myFunction()" placeholder="Search for names..">
+    <a id="a_hide_e" class="info-link" href="#" onclick="hide('ev')">Hide</a>
+    <a id="a_insert_e" class="info-link" href="#" onclick="insertEveniment();">Adaugati un eveniment</a>
+  </section>
+
+  <section id="sec3_1" class="bigtitle">
+      <h1 style="text-align:center">Adaugare eveniment nou</h1>
+      <form class="register" action="#" method="post">
+        <span id="eventInsertSucces">Eveniment adaugat cu succes.</span>
+        <span id="eventInsertFail">Nota nu a putut fi inserata.</span>
+        <script>
+          setElementInvisible('eventInsertSucces')
+          setElementInvisible('eventInsertFail')
+        </script>
+        <div>
+          <label for="eveniment">Eveniment*</label>
+          <input type="text" name="eveniment" id="eveniment">
+          <span id="eveniment_error" style="display:none">Titlul evenimentului este obligatoriu</span>
+        </div>
+         <div>
+          <label for="passkey">Passkey</label>
+          <input type="password" name="passkey" id="passkey" >
+          <span id="passkey_error" style="display:none">Adaugati o scurta descriere.</span>
+        </div>
+        <div class="actions">
+          <button type="button" onclick="verificareInsertEveniment();">INSERARE EVENIMENT</button>
+        </div>
+      </form>
+    </section>
+</div>
+<script>
+var formConds = [];
+var editedFields = [];
+var editableFields = [];
+var listedStudentsCurs = document.createElement("div");
+listedStudentsCurs.setAttribute('id','listaStudenti');
+listedStudentsCurs.style.display = 'none';
+console.log(listedStudentsCurs);
+var listedStudentsLab = [];
+
+var body = document.body;
+body.appendChild(listedStudentsCurs);
 
 function blurChecker(field){
   if(field == 'nr_matricol'){
@@ -177,7 +341,7 @@ function showRanking(category,type){
       // tabel.setAttribute("border", "2");
       ajax.get('/api/catalog', {}, function (results){
         let resultParsed = JSON.parse(results);
-        console.log(resultParsed);
+        // console.log(resultParsed);
         resultParsed["prezente_curs"].forEach(populatePrezenteCurs);
         resultParsed=[];
       });
@@ -199,34 +363,87 @@ function showRanking(category,type){
   }
   
   function populatePrezenteCurs(element, index, arr){
-    // var tblBody = document.getElementById("ul_su_curs").getElementsByTagName('tbody');
-    var row = tblBody.insertRow(index);//table.bdoy.length
-    let cell = row.insertCell(0);
-    cell.innerHTML = element[0]; //nr_matricol 
-    
-    var studenti = document.querySelectorAll('#ul_su_curs>tbody>tr>td:first-child');
-    studenti.forEach(function(element,index,list){
-      console.log('element: ', element);
-      console.log('element content : ',element.textContent);
-    });
+    // var studenti = document.querySelector('div#listaStudenti');
+    if(index==0){
+      console.log(tblBody);
+      var row = tblBody.insertRow(index);//table.bdoy.length
+      let cell = row.insertCell(0);
+      cell.innerHTML = arr[0][0]; //nr_matricol  poate element[0]
+      
 
-    for (let i=1; i<14; i++){
-      this['cell'+i] = row.insertCell(i);
-      // observer.observe(this['cell'+i],observerConfig);
-      this['cell'+i].setAttribute('id', 'cell_curs_'+index+'_'+i);
-      this['cell'+i].setAttribute('class', 'tableCell');
-      // this['cell'+i].setAttribute('onInput', 'someFunction(this);');
-      this['cell'+i].setAttribute('contenteditable', true);
-      // this['cell'+i].setAttribute('onChange', tdChangesHandler);
-      if (element[3]==i){
-        this['cell'+i].innerHTML = 1;
-      }else{
-        this['cell'+i].innerHTML = null;
+      // var para = document.createElement("p");
+      // var student = Object.assign(para);
+      // student.innerHTML = element[0];
+      // studenti.appendChild(student);
+
+      for (let i=1; i<14; i++){
+        this['cell'+i] = row.insertCell(i);
+        // observer.observe(this['cell'+i],observerConfig);
+        this['cell'+i].setAttribute('id', 'cell_curs_'+index+'_'+i);
+        this['cell'+i].setAttribute('class', 'tableCell');
+        // this['cell'+i].setAttribute('onInput', 'someFunction(this);');
+        this['cell'+i].setAttribute('contenteditable', true);
+        // this['cell'+i].setAttribute('onChange', tdChangesHandler);
+        if (element[3]==i){
+          this['cell'+i].innerHTML = 1;
+        }else{
+          this['cell'+i].innerHTML = null;
+        }
       }
-      // if(i==14){
-      //   this['cell'+i].innerHTML = function()
+    }
+    else{
+      for (var i=0; i<tblBody.children.length;i++){
+        console.log(tblBody.children.item(i));
+        console.log(tblBody.children.item(i).children.item(0));
+        //------------daca exista deja nr_matricol in tabel-----
+        if(tblBody.children.item(i).children.item(0).innerHTML == element[0]){
+          this['cell'] = tblBody.children.item(i).children.item(0).parentNode;
+          for(let i=1;i<14; i++){
+            if(element[3]==i){
+              console.log(this['cell']);
+              this['cell'].children.item(i).innerHTML = 1;
+            }
+          }
+        }
+        else{
+          var row = tblBody.insertRow(tblBody.children.length);
+          let cell = row.insertCell(0);
+          cell.innerHTML = element[0]; //nr_matricol  poate element[0]
+                    
+          for (let i=1; i<14; i++){
+            this['cell'] = row.insertCell(i);
+            // observer.observe(this['cell'+i],observerConfig);
+            this['cell'].setAttribute('id', 'cell_curs_'+tblBody.children.length+'_'+i);
+            this['cell'].setAttribute('class', 'tableCell');
+            // this['cell'+i].setAttribute('onInput', 'someFunction(this);');
+            this['cell'].setAttribute('contenteditable', true);
+            // this['cell'+i].setAttribute('onChange', tdChangesHandler);
+            if (element[3]==i){
+              this['cell'].innerHTML = 1;
+            }else{
+              this['cell'].innerHTML = null;
+            }
+          }
+        }
+      }
+        
+      
+      // for(var i=0; i<studenti.children.length; i++){
+      //   if(studenti.children.item(i).textContent == element[0]){
+      //     console.log(studenti.children.item(i));
+      //     console.log(studenti.children[i]);
+      //     // var y = document.querySelector(x);
+      //     // console.log(y);
+      //     //---------celula cu nodul existent
+      //     this['studentExistent']= 1;
+      //     // console.log(this['studentExistent']);
+
+
+      //   }
       // }
     }
+
+    
   } // -----------end populatePrezenteCurs() ---------------
 
   //---------------------NOT USED--------------------
@@ -247,19 +464,88 @@ function showRanking(category,type){
     }
   }
   function populateNoteLab(element, index, arr){
-    var row = tblBody.insertRow(index);//table.bdoy.length
-    let cell = row.insertCell(0);
-    cell.innerHTML = element[0]; /*element[1]+' '+element[2];*/
-    for (let i=1; i<14; i++){
-      // console.log('populare curs coloana',i);
-      this['cell'+i] = row.insertCell(i);
-      this['cell'+i].setAttribute('id', 'cell_c'+index+'_'+i);
-      this['cell'+i].setAttribute('contenteditable', true);
-      if (element[4]==i){
-        this['cell'+i].innerHTML = element[3];
-      }else{
-        this['cell'+i].innerHTML = '-';
+    // var studenti = document.querySelector('div#listaStudenti');
+    if(index==0){
+      console.log(tblBody);
+      var row = tblBody.insertRow(index);//table.bdoy.length
+      let cell = row.insertCell(0);
+      cell.innerHTML = arr[0][0]; //nr_matricol  poate element[0]
+      
+
+      // var para = document.createElement("p");
+      // var student = Object.assign(para);
+      // student.innerHTML = element[0];
+      // studenti.appendChild(student);
+
+      for (let i=1; i<14; i++){
+        this['cell'] = row.insertCell(i);
+        console.log(this['cell']);
+        // observer.observe(this['cell'+i],observerConfig);
+        this['cell'].setAttribute('id', 'cell_curs_'+index+'_'+i);
+        this['cell'].setAttribute('class', 'tableCell');
+        // this['cell'+i].setAttribute('onInput', 'someFunction(this);');
+        this['cell'].setAttribute('contenteditable', true);
+        // this['cell'+i].setAttribute('onChange', tdChangesHandler);
+        if (element[4]==i){
+          this['cell'].innerHTML = element[3];
+        }else{
+          this['cell'].innerHTML = null;
+        }
       }
+    }
+    else{
+      for (var i=0; i<tblBody.children.length;i++){
+        console.log(tblBody.children.item(i));
+        console.log(tblBody.children.item(i).children.item(0));
+        debugger;
+        //------------daca exista deja nr_matricol in tabel-----
+        if(tblBody.children.item(i).children.item(0).innerHTML == element[0]){
+          this['cell'] = tblBody.children.item(i).children.item(0).parentNode;
+          for(let i=1;i<14; i++){
+            if(element[4]==i){
+              console.log(this['cell']);
+              this['cell'].children.item(i).innerHTML = element[3];
+            }
+          }
+        }
+        else{
+          //-------inseram linie noua  --------------
+          var row = tblBody.insertRow(tblBody.children.length);
+          let cell = row.insertCell(0);
+          cell.innerHTML = element[0]; //nr_matricol  poate element[0]
+          
+          //--------inseram celulele------------------
+          for (let i=1; i<14; i++){
+            this['cell'] = row.insertCell(i);
+            // observer.observe(this['cell'+i],observerConfig);
+            this['cell'].setAttribute('id', 'cell_curs_'+tblBody.children.length+'_'+i);
+            this['cell'].setAttribute('class', 'tableCell');
+            // this['cell'+i].setAttribute('onInput', 'someFunction(this);');
+            this['cell'].setAttribute('contenteditable', true);
+            // this['cell'+i].setAttribute('onChange', tdChangesHandler);
+            if (element[4]==i){
+              this['cell'].innerHTML = element[3];
+            }else{
+              this['cell'].innerHTML = null;
+            }
+          }
+        }
+      }
+        
+      
+      // for(var i=0; i<studenti.children.length; i++){
+      //   if(studenti.children.item(i).textContent == element[0]){
+      //     console.log(studenti.children.item(i));
+      //     console.log(studenti.children[i]);
+      //     // var y = document.querySelector(x);
+      //     // console.log(y);
+      //     //---------celula cu nodul existent
+      //     this['studentExistent']= 1;
+      //     // console.log(this['studentExistent']);
+
+
+      //   }
+      // }
     }
   }
   // console.log(editableFields);
@@ -534,159 +820,3 @@ window.onload = function(){
   // ----------------------END IMP-------------------------------
   
 </script>
-<header>
-	<h1 class="title">My WEB way!</h1>
-	<nav>
-		<ul id="nav_ul">
-      <li id="home_li" class="nav_item"><a id="a_frontpage" href="/home">Home</a></li>
-      <li id="catalog_li" class="nav_item"><a id="a_catalog" href="/catalog">Rankings</a></li>
-      <li id="profile_li" class="nav_item"><a id="a_profile" href="/profile">Profile</a>
-      <li id="ddn" class="nav_item"><a id="logout" href="javascript:logout();">Logout</a>
-			<!--ul id="dropdown"-->
-				<!--li id="myprofile_li"><a id="a_myprofile" href="myprofile.html">Detalii</a></li-->
-				<!--li id="logout_li"><a id="a_logout" href="logout.html">Logout</a></li-->
-			<!--/ul-->
-			</li>
-		</ul>
-	</nav>
-</header>
-
-<div class="main_container">
-	<section id="sec1" class="bigtitle">
-    	<h2 class="bigtitle-title">COURSE SCORES</h2>
-    	<a id="a_show_c" href="#" onclick="showRanking('curs','prezente');" class="info-link">Click here for details</a>
-
-	    <table id="ul_su_curs" class="table_table">
-	    </table>
-
-    	<input type="text" id="search_input_c" onkeyup="myFunction()" placeholder="Search for names..">
-   		<a id="a_hide_c" class="info-link" href="#" onclick="hide('curs');">Hide</a>
-      <a id="a_insert_c" class="info-link" href="#" onclick="insertPrezentaCurs();">Adaugati o prezenta</a>
-      
-      <label id="csvFileLabelId" for="csvFileId">Adauga prezente din fisier CSV
-        <input name="csvFileId" id="csvFileId" type="file" style="display:none">
-         <!-- onchange="handleFiles(this.files)" -->
-      </label>
-      <!-- <a href="#" id="a_csv_c" onclick="importCsv();">Adauga prezente din fisier CSV</a>  -->
-  	</section>
-
-    <section id="sec1_1" class="bigtitle">
-      <h1 style="text-align:center">Inserare prezenta curs</h1>
-      <form class="register" action="#" method="post">
-
-        <span id="prezentaInsertSuccess">Prezenta inserata cu succes.</span>
-        <span id="prezentaInsertFail">Prezenta nu a putut fi inserata.</span>
-        <script>
-          setElementInvisible('prezentaInsertSuccess');
-          setElementInvisible('prezentaInsertFail');
-        </script>
-        <div>
-          <label for="nr_matricol">Nr_matricol*</label>
-          <input type="text" name="nr_mat" id="nr_matricol" onblur="blurChecker('nr_matricol');">
-          <span id="nr_matricol_error" style="display:none" >Nr matricol nu este valid</span>
-        </div>
-        <div>
-          <label for="data_notare">Data Notare*</label>
-          <input type="date" name="data_notare" id="data_notare" onblur="blurChecker('data_notare');">
-          <span id="data_notare_error"  style="display:none">Selectati data prezentei.</span>
-        </div>
-        <div>
-          <label for="saptamana">Saptamana*</label>
-          <input type="number" name="sapt" min="1" step="1" max="13" id="saptamana" onblur="blurChecker('saptamana');">
-          <span id="saptamana_error" style="display:none">Alegeti saptamana in care a fost pusa prezenta.</span>
-        </div>
-        <div class="actions">
-          <button type="button" onclick="verificareInsertCurs();">INSERARE PREZENTA</button>
-        </div>
-      </form>
-    </section>
-
-  	<section id="sec2" class="bigtitle">
-    	<h2 class="bigtitle-title">LABORATORY SCORES</h2>
-    	<a id="a_show_l" href="#" onclick="showRanking('lab','note');" class="info-link">Click here for details</a>
-    	
-      <table id="ul_su_lab" class="table_table">
-    	</table>
-
-    	<input type="text" id="search_input_l" onkeyup="myFunction();" placeholder="Search for names..">
-    	<a id="a_hide_l" class="info-link" href="#" onclick="hide('lab');">Hide</a>
-      <a id="a_insert_l" class="info-link" href="#" onclick="insertNotaLab();">Adaugati o nota</a>
-      <label id="csvFileLabelIdL" for="csvFileIdLab">Adauga prezente din fisier CSV
-        <input name="csvFileIdLab" id="csvFileIdLab" type="file" style="display:none">
-         <!-- onchange="handleFiles(this.files)" -->
-      </label>
-  	</section>
-
-    <section id="sec2_1" class="bigtitle">
-      <h1 style="text-align:center">Inserare nota laborator</h1>
-      <form class="register" action="#" method="post">
-        <span id="notaInsertSuccess">Nota inserata cu succes.</span>
-        <span id="notaInsertFail">Nota nu a putut fi inserata.</span>
-        <script>
-          setElementInvisible('notaInsertSuccess');
-          setElementInvisible('notaInsertFail');
-        </script>
-        <div>
-          <label for="nr_matricolLab">Nr_matricol*</label>
-          <input type="text" name="nr_matricolLab" id="nr_matricolLab" onblur="blurChecker('nr_matricolLab');">
-          <span id="nr_matricolLab_error" style="display:none">Nr matricol nu este valid</span>
-        </div>
-        <div>
-          <label for="nota">Nota</label>
-          <input type="number" name="github" id="nota" min="1" max="10" step="1" onblur="blurChecker('nota');">
-          <span id="nota_error" style="display:none">Nota este obligatorie</span>
-        </div>
-        <div>
-          <label for="data_notareLab">Data_notare*</label>
-          <input type="date" name="data_notareLab" id="data_notareLab" onblur="blurChecker('data_notareLab');">
-          <span id="data_notareLab_error" style="display:none">Data nu este valida</span>
-        </div>
-        <div>
-          <label for="saptamanaLab">Saptamana*</label>
-          <input type="number" name="saptamanaLab" id="saptamanaLab" min="1" step="1" max="13" onblur="blurChecker('saptamanaLab');">
-          <span id="saptamanaLab_error" style="display:none">Alegeti saptamana in care a fost pusa nota.</span>
-        </div>
-
-        <div class="actions">
-          <button type="button" onclick="verificareInsertNota();">ADAUGA NOTA LABORATOR</button>
-        </div>
-      </form>
-  </section>
-
-	<section id="sec3" class="bigtitle">
-    <h2 class="bigtitle-title">Other Events Standings</h2>
-    <a id="a_show_e" href="#" onclick="showRanking('ev','ev');" class="info-link">Click here for details</a>
-
-    <table id="ul_su_ev" class="table_table">
-    </table>
-
-    <input type="text" id="search_input_e" onkeyup="myFunction()" placeholder="Search for names..">
-    <a id="a_hide_e" class="info-link" href="#" onclick="hide('ev')">Hide</a>
-    <a id="a_insert_e" class="info-link" href="#" onclick="insertEveniment();">Adaugati un eveniment</a>
-  </section>
-
-  <section id="sec3_1" class="bigtitle">
-      <h1 style="text-align:center">Adaugare eveniment nou</h1>
-      <form class="register" action="#" method="post">
-        <span id="eventInsertSucces">Eveniment adaugat cu succes.</span>
-        <span id="eventInsertFail">Nota nu a putut fi inserata.</span>
-        <script>
-          setElementInvisible('eventInsertSucces')
-          setElementInvisible('eventInsertFail')
-        </script>
-        <div>
-          <label for="eveniment">Eveniment*</label>
-          <input type="text" name="eveniment" id="eveniment">
-          <span id="eveniment_error" style="display:none">Titlul evenimentului este obligatoriu</span>
-        </div>
-         <div>
-          <label for="passkey">Passkey</label>
-          <input type="password" name="passkey" id="passkey" >
-          <span id="passkey_error" style="display:none">Adaugati o scurta descriere.</span>
-        </div>
-        <div class="actions">
-          <button type="button" onclick="verificareInsertEveniment();">INSERARE EVENIMENT</button>
-        </div>
-      </form>
-    </section>
-</div>
