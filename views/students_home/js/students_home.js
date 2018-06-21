@@ -8,7 +8,7 @@ function PopulateChances()
         id : cookieGetUserID()
         }, function (chances)
     {
-      /*console.log(chances);*/
+      console.log(chances);
       chances=chances.split(" ");
       courses_attendances = chances[0];
       courses_attendances=parseInt(courses_attendances*100);
@@ -47,7 +47,7 @@ function PopulateEvents()
         var ul = document.createElement('ul');
         ul.setAttribute('class', "future_events");
 
-        ajax.get('api/getevents',{ id: cookieGetLoggedUserID() 
+        ajax.get('api/getevents',{ id: cookieGetLoggedUserID()
          }, function (events)
         {
         events = events.split("#!#");
@@ -98,7 +98,7 @@ function PopulateEvents()
           if (div.tagName === 'LI' && div.classList.toggle('checked'))
         div.classList.toggle('checked');
         /*apasa pe butonul de validare*/
-        
+
       });
     });
 
@@ -111,10 +111,10 @@ function PopulateEvents()
 function attend_event(id,v_key){
   ajax.post('api/getevents',{e_id: id, s_id: cookieGetLoggedUserID(), valid_key: v_key}, function (response)
   {
-    
+
     if(response === 'true')
     {
-
+        setElementInvisible('profile_failure');
         setElementVisible('profile_success');
         sleep(2000).then(() => {
         window.location.replace("/home");
@@ -122,6 +122,7 @@ function attend_event(id,v_key){
     }
     else
     {
+        setElementInvisible('profile_success');
         setElementVisible('profile_failure');
         sleep(2000).then(() => {
         window.location.replace("/home");
@@ -139,7 +140,7 @@ if(e.style.display == 'block'){
   e.style.display = 'none';
 }
 else
-  e.style.display = 'block';  
+  e.style.display = 'block';
   var valid_btn = document.getElementById('edit_button');
   valid_btn.addEventListener('click', function(e){
     var key = getElementTextByID('inp');

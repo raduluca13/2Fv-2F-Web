@@ -4,6 +4,13 @@ class Utils
 {
     private static $logintag = 'loggedIn';
     private static $user_type = 'userType';
+    private static $github_account = 'githubAccount';
+    private static $username = 'username';
+
+    public static function setUserServices($user_services)
+    {
+        $GLOBALS['user_services'] = $user_services;
+    }
 
     public static function requiredArguments($methodType, $arguments)
     {
@@ -57,9 +64,26 @@ class Utils
     {
         if(!isset($_COOKIE[self::$logintag]))
         {
-            if ($redirectNeeded)
-                header('Location: /login');
-            return false;
+          if ($redirectNeeded)
+              header('Location: /login');
+              return false;
+        }
+        $id=$_COOKIE[self::$logintag];
+        $user_type=$_COOKIE[self::$user_type];
+        $github_account=$_COOKIE[self::$github_account];
+        $username=$_COOKIE[self::$username];
+        $userServices = new User_Services();
+        $hash_from_db = $userServices->GetUserCookieHash($id,$username);
+        $hash = $id.$user_type.$github_account.$username;
+        $hash = md5($hash);
+        if($hash!=$hash_from_db)
+        {
+          setcookie(self::$logintag, "", time()-3600);
+          setcookie(self::$user_type, "", time()-3600);
+          setcookie(self::$github_account, "", time()-3600);
+          setcookie(self::$username, "", time()-3600);
+          header('Location: /login');
+          return false;
         }
         return true;
     }

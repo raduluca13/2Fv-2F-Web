@@ -5,6 +5,7 @@ class users_api
     public function __construct()
     {
         $this->userServices = new User_Services();
+        Utils::setUserServices($this->userServices);
     }
 
     function index()
@@ -26,8 +27,9 @@ class users_api
         $id = $result[0];
         $user_type = $result[1];
         $github_account = $result[2];
+        $this->userServices->PutCookieHash($id,$user_type,$github_account,$username);
         if ($id == null)
             $id = 0;
-        echo $result[0] . ' ' . $result[1] . ' ' . $result[2];
+        echo $result[0] . ' ' . $result[1] . ' ' . $result[2] . ' ' . $username;
     }
 }

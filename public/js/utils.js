@@ -27,7 +27,8 @@ addLoadEvent(principalLoad);
 
 var loginCookieName = 'loggedIn';
 var userType = "userType";
-var github_account = "githubAccount"
+var github_account = "githubAccount";
+var username = "username";
 
 function setCookie(name, value, timeout)
 {
@@ -47,6 +48,11 @@ function CookieUserTypeLogin(value)
 function CookieGithubAccountLogin(value)
 {
     setCookie("githubAccount", value, new Date(Date.now() + 86400));//one day
+}
+
+function CookieUsername(username)
+{
+    setCookie("username", username, new Date(Date.now() + 86400));//one day
 }
 
 function cookieIsUserLoggedIn()
@@ -90,6 +96,7 @@ function cookieUserLogout()
     document.cookie = loginCookieName + "=; max-age=-2";
     document.cookie = userType + "=; max-age=-2";
     document.cookie = github_account + "=; max-age=-2";
+    document.cookie = username + "=; max-age=-2";
 }
 
 function cookieGetLoggedUserID()
@@ -186,7 +193,7 @@ ajax.fileUpload = function(url, method, data, callback, async){
     }
     // var x = ajax.x();
     var x = new XMLHttpRequest;
-    
+
     x.open(method, url, async);
     x.onreadystatechange = function () {
         if (x.readyState === 4) {
@@ -194,10 +201,10 @@ ajax.fileUpload = function(url, method, data, callback, async){
         }
     };
     if (method === 'POST'){
-        /* 
-        * The value of the boundary doesn't matter as long as no other structure in 
-        * the request contains such a sequence of characters. We chose, nevertheless, 
-        * a pseudo-random value based on the current timestamp of the browser. 
+        /*
+        * The value of the boundary doesn't matter as long as no other structure in
+        * the request contains such a sequence of characters. We chose, nevertheless,
+        * a pseudo-random value based on the current timestamp of the browser.
         */
         var boundary = "AJAX--------------" + (new Date()).getTime();
         var contentType = "multipart/form-data; boundary=" + boundary;

@@ -19,7 +19,7 @@ function showRanking(category,type){
   var row = document.createElement("tr");
 
   var td = document.createElement("td");
-  var text = document.createTextNode("Numar Matricol");
+  var text = document.createTextNode("Prenume Nume");
   td.appendChild(text);
   row.appendChild(td);
   tblHead.appendChild(row);
@@ -137,9 +137,9 @@ function hide(category){
 	<nav>
 		<ul id="nav_ul">
       <li id="home_li" class="nav_item"><a id="a_frontpage" href="/home">Home</a></li>
-      <li id="sugestii_li" class="nav_item"><a id="a_sugestii" href="/sugestii">Suggestions</a></li>
       <li id="catalog_li" class="nav_item"><a id="a_catalog" href="/catalog">Rankings</a></li>
-      <li id="profile" class="nav_item"><a id="a_profile" href="/profile">Profile</a>
+      <li id="sugestii_li" class="nav_item"><a id="a_sugestii" href="/sugestii">Suggestions</a></li>
+      <li id="profile_li" class="nav_item"><a id="a_profile" href="/profile">Profile</a>
         <li id="ddn" class="nav_item"><a id="logout" href="javascript:logout();">Logout</a>
 			<!--ul id="dropdown"-->
 				<!--li id="myprofile_li"><a id="a_myprofile" href="myprofile.html">Detalii</a></li-->

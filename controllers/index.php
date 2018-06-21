@@ -6,7 +6,6 @@ class Index extends Controller
     {
         parent::__construct();
         Utils::IsUserLogged(true);
-        echo "si aici3";
         if(Utils::UserGetId()==1){
             header('Location: /login');
         }

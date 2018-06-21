@@ -36,6 +36,7 @@ function jsLogin()
         id = response.split(" ")[0];
         user_type = response.split(" ")[1];
         github_account=response.split(" ")[2];
+        username=response.split(" ")[3];
         if (id > 0)
         {
           setElementVisible('login_success');
@@ -44,6 +45,7 @@ function jsLogin()
             cookieUserLogin(id);
             CookieUserTypeLogin(user_type);
             CookieGithubAccountLogin(github_account);
+            CookieUsername(username);
             window.location.replace("/home");
           })
         }

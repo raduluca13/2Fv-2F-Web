@@ -1,8 +1,4 @@
-<script src="/login/js/login.js" type="text/javascript"></script>
-<!-- <script src="/catalog/js/util.js" type="text/javascript"></script> -->
 <script>
-
-
 var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
 var observer = new MutationObserver(function(mutations) {
     mutations.forEach(function(mutation,index,list){
@@ -12,7 +8,7 @@ var observer = new MutationObserver(function(mutations) {
         value: mutation.target.textContent,
         oldValue: mutation.oldValue
       };
-      // console.log("Recording mutation:", entry);
+      console.log("Recording mutation:", entry);
 
       if (mutation.type == 'childList') {
         // console.log('\n'+'A child node has been added or removed.');
@@ -36,8 +32,6 @@ var observerConfig = {
   subtree: true,
   characterData: false //false for textContent
 }
-
-// observer.observe(document, observerConfig);
 
 
 </script>
@@ -69,7 +63,7 @@ var observerConfig = {
     	<input type="text" id="search_input_c" onkeyup="myFunction()" placeholder="Search for names..">
    		<a id="a_hide_c" class="info-link" href="#" onclick="hide('curs');">Hide</a>
       <a id="a_insert_c" class="info-link" href="#" onclick="insertPrezentaCurs();">Adaugati o prezenta</a>
-      
+
       <label id="csvFileLabelId" for="csvFileId">Adauga prezente din fisier CSV
         <input name="csvFileId" id="csvFileId" type="file" style="display:none">
          <!-- onchange="handleFiles(this.files)" -->
@@ -111,7 +105,7 @@ var observerConfig = {
   	<section id="sec2" class="bigtitle">
     	<h2 class="bigtitle-title">LABORATORY SCORES</h2>
     	<a id="a_show_l" href="#" onclick="showRanking('lab','note');" class="info-link">Click here for details</a>
-    	
+
       <table id="ul_su_lab" class="table_table">
     	</table>
 
@@ -229,7 +223,7 @@ function blurChecker(field){
     });
     formConds.push(conditionNrMatL);
   }
-  
+
   if(field == 'saptamana'){
     var conditionSaptamana = new FormularConditionObject('saptamana_error', function () {
       var re = /^([0-9])/;
@@ -361,7 +355,7 @@ function showRanking(category,type){
       });
     }
   }
-  
+
   function populatePrezenteCurs(element, index, arr){
     // var studenti = document.querySelector('div#listaStudenti');
     if(index==0){
@@ -369,7 +363,7 @@ function showRanking(category,type){
       var row = tblBody.insertRow(index);//table.bdoy.length
       let cell = row.insertCell(0);
       cell.innerHTML = arr[0][0]; //nr_matricol  poate element[0]
-      
+
 
       // var para = document.createElement("p");
       // var student = Object.assign(para);
@@ -409,7 +403,7 @@ function showRanking(category,type){
           var row = tblBody.insertRow(tblBody.children.length);
           let cell = row.insertCell(0);
           cell.innerHTML = element[0]; //nr_matricol  poate element[0]
-                    
+
           for (let i=1; i<14; i++){
             this['cell'] = row.insertCell(i);
             // observer.observe(this['cell'+i],observerConfig);
@@ -426,8 +420,8 @@ function showRanking(category,type){
           }
         }
       }
-        
-      
+
+
       // for(var i=0; i<studenti.children.length; i++){
       //   if(studenti.children.item(i).textContent == element[0]){
       //     console.log(studenti.children.item(i));
@@ -443,7 +437,7 @@ function showRanking(category,type){
       // }
     }
 
-    
+
   } // -----------end populatePrezenteCurs() ---------------
 
   //---------------------NOT USED--------------------
@@ -470,7 +464,7 @@ function showRanking(category,type){
       var row = tblBody.insertRow(index);//table.bdoy.length
       let cell = row.insertCell(0);
       cell.innerHTML = arr[0][0]; //nr_matricol  poate element[0]
-      
+
 
       // var para = document.createElement("p");
       // var student = Object.assign(para);
@@ -513,7 +507,7 @@ function showRanking(category,type){
           var row = tblBody.insertRow(tblBody.children.length);
           let cell = row.insertCell(0);
           cell.innerHTML = element[0]; //nr_matricol  poate element[0]
-          
+
           //--------inseram celulele------------------
           for (let i=1; i<14; i++){
             this['cell'] = row.insertCell(i);
@@ -531,8 +525,8 @@ function showRanking(category,type){
           }
         }
       }
-        
-      
+
+
       // for(var i=0; i<studenti.children.length; i++){
       //   if(studenti.children.item(i).textContent == element[0]){
       //     console.log(studenti.children.item(i));
@@ -574,26 +568,26 @@ function hide(category){
     document.getElementById('a_hide_c').style.display = "none";
     document.getElementById('a_insert_c').style.display = "none";
     document.getElementById('search_input_c').style.display = "none";
-    
+
     document.getElementById('csvFileId').style.display = "none";
     document.getElementById('csvFileLabelId').style.display = "none";
     observer.disconnect();
     document.getElementById('ul_su_'+category).innerHTML = '';
     document.getElementById('ul_su_'+category).style.display = "none";
-    
+
     document.getElementById('a_show_c').style.display = "block";
   }
   if(category === 'lab'){
     document.getElementById('a_hide_l').style.display = "none";
     document.getElementById('a_insert_l').style.display = "none";
     document.getElementById('search_input_l').style.display = "none";
-    
+
     document.getElementById('csvFileIdLab').style.display = "none";
     document.getElementById('csvFileLabelIdL').style.display = "none";
     observer.disconnect();
     document.getElementById('ul_su_'+category).innerHTML = '';
     document.getElementById('ul_su_'+category).style.display = "none";
-    
+
     document.getElementById('a_show_l').style.display = "block";
   }
   if(category === 'ev'){
@@ -677,7 +671,7 @@ function verificareInsertNota(){
     id_prof : cookieGetLoggedUserID(),
     saptamana: getElementTextByID('saptamanaLab')
     }, function (text){
-      
+
       let checker = JSON.parse(text);
       console.log('checker: ', checker);
       if (checker == 'done')  {
@@ -782,7 +776,7 @@ window.onload = function(){
         console.log('here');
         ajax.post('api/catalog', {
           cat: 'file',
-          csvDestination: 'lab', 
+          csvDestination: 'lab',
           data: reader.result
         }, function(response){
           console.log(response);
@@ -802,7 +796,7 @@ window.onload = function(){
   // -------------IMPORT FOR FILES --NEEDS REWORK. NOT USED ------------
   // function handleFiles(files){
   //   var fileInput = document.getElementById("csvFileId");
-  //   var filess = fileInput.files;  
+  //   var filess = fileInput.files;
   //   var fileC = filess[0]; //iterate if more / file = files.item(i);
 
   //   var formData=new FormData();
@@ -818,5 +812,5 @@ window.onload = function(){
   // }
   // document.querySelector("#csvFileId").onchange = importCsv;
   // ----------------------END IMP-------------------------------
-  
+
 </script>

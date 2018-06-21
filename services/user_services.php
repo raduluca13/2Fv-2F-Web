@@ -207,7 +207,7 @@ class User_Services extends Services
                 SELECT e_id
                 FROM evidenta_evenimente
                 where s_id = ?
-                
+
         )");
         $sth->bind_param("i",$id);
         $sth->bind_result($e_id, $eveniment);
@@ -224,14 +224,14 @@ class User_Services extends Services
         $result = null;
         $valid_key = md5($valid_key);
 
-        $sth = $this->db->GetConn()->prepare("SELECT count(*) 
-        from evenimente 
+        $sth = $this->db->GetConn()->prepare("SELECT count(*)
+        from evenimente
         where validation_key like ? and id = ?;");
 
         $sth->bind_param("si", $valid_key, $e_id);
         $sth->bind_result($result);
         $sth->execute();
-        while ($sth->fetch()){   } 
+        while ($sth->fetch()){   }
 
         if ($result !== 0){
         $sth = $this->db->GetConn()->prepare("INSERT into evidenta_evenimente (e_id,s_id) values(?,?);");
@@ -241,12 +241,33 @@ class User_Services extends Services
         return false;
     }
 
+    private function ComputeEventsAttendances($id)
+    {
+        $sth = $this->db->GetConn()->prepare("SELECT COUNT(id) FROM evidenta_evenimente WHERE s_id=?");
+        $sth->bind_param("i",$id);
+        $eveniments_nr=0;
+        $sth->bind_result($eveniments_nr);
+        $sth->execute();
+        while ($sth->fetch())
+        {
+        }
+
+        $sth = $this->db->GetConn()->prepare("SELECT COUNT(id) FROM evenimente");
+        $total_nr=0;
+        $sth->bind_result($total_nr);
+        $sth->execute();
+        while ($sth->fetch())
+        {
+        }
+        return $eveniments_nr/$total_nr;
+    }
+
 
     public function computechanches($id)
     {
         $courses_attendances=$this->ComputeCoursesAttendances($id);
         $laboratories_attendances = $this->ComputeLaboratoriesAttendances($id);
-        $web_events = 1/2;
+        $web_events = $this->ComputeEventsAttendances($id);
         $project_situation = $this->ComputeProjectSituation($id);
         $promovability_chance = ($courses_attendances+$laboratories_attendances+$web_events+$project_situation)/4;
         return array($courses_attendances,$laboratories_attendances,$web_events,$project_situation,$promovability_chance);
@@ -393,5 +414,27 @@ class User_Services extends Services
             if ($rows !== null) //all good
                 return $rows;
             return null;
+        }
+
+        public function PutCookieHash($id,$user_type,$github_account,$username)
+        {
+              $hash = $id.$user_type.$github_account.$username;
+              $hash = md5($hash);
+              $sth = $this->db->GetConn()->prepare("UPDATE tw.users SET hash=? WHERE id=?");
+              $sth->bind_param("ss",$hash,$id);
+              return $sth->execute();
+        }
+
+        public function GetUserCookieHash($id,$username)
+        {
+          $sth = $this->db->GetConn()->prepare("SELECT hash FROM tw.users WHERE id = ? AND username = ?");
+          $sth->bind_param("ss", $id,$username);
+          $sth->execute();
+          $hash=null;
+          $sth->bind_result($hash);
+          while ($sth->fetch())
+          {
+          }
+          return $hash;
         }
 }
